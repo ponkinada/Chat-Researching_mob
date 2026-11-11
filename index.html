@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Прототип 2_новый — мобильная версия</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap">
+<style>
+html,body{margin:0;height:100%;background:#FFFFFF}
+.pr .tab{transition:opacity .15s}
+.pr .tab:hover{opacity:.7}
+a{color:#835DE1}a:hover{color:#6a45c7}
+.pr button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:left}
+.pr .fab{transition:opacity .15s}
+.pr .fab:hover{opacity:.5}
+.pr .hdr{background:transparent;transition:background .15s}
+.pr .hdr:hover{background:rgba(255,255,255,0.5)}
+.pr .chiphot{background:transparent;transition:background .15s}
+.pr .chiphot:hover{background:rgba(25,25,25,0.05)}
+.pr .ib{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex:none;transition:opacity .15s}
+.pr .ib:hover{opacity:.5}
+.pr .ib-off{cursor:default}
+.pr .ib-off:hover{opacity:1}
+.pr .ico{transition:opacity .15s}
+@keyframes prNote{0%{opacity:0;height:0;margin-top:0;margin-bottom:0;background:rgba(252,245,227,0)}25%{opacity:1;height:19px;margin-top:5px;margin-bottom:10px;background:#FCF5E3}55%{background:#FCF5E3}100%{opacity:1;height:19px;margin-top:5px;margin-bottom:10px;background:rgba(252,245,227,0)}}
+.pr .note{transition:opacity .15s}
+.pr .note-anim{animation:prNote 1.6s cubic-bezier(.2,.8,.2,1) backwards}
+.pr .note:hover{opacity:.5}
+.pr .ico:hover{opacity:.5}
+.pr .cell{transition:background .12s}
+.pr .cell:hover{background:rgba(25,25,25,0.05)}
+.pr .aiq{background:#EFEDF8;transition:background .12s}
+.pr .qr{background:#FFFFFF;color:#835DE1;box-shadow:inset 0 0 0 1px #835DE1;transition:background .12s}
+.pr .qr:hover{background:#EFEDF8}
+@keyframes prFlash{0%,35%{background:#FCF5E3}100%{background:#EFEDF8}}
+.pr .flash{animation:prFlash 2.2s ease-out}
+.pr .aiq:hover{background:#E6E2F5}
+.pr .promo{background:#FFFFFF;transition:background .12s}
+.pr .promo:hover{background:rgba(131,93,225,0.06)}
+.pr .pri{background:#835DE1;transition:background .12s}
+.pr .pri:hover{background:#7450D0}
+.pr .lnk{color:#835DE1;text-decoration:underline;cursor:pointer}
+.pr .chip{background:rgba(25,25,25,0.05);transition:background .12s}
+.pr .chip:hover{background:rgba(25,25,25,0.1)}
+.pr .ghost:hover{background:rgba(25,25,25,0.05)}
+.pr .noscroll{scrollbar-width:none;-ms-overflow-style:none}
+.pr .noscroll::-webkit-scrollbar{display:none}
+.pr .msgs::-webkit-scrollbar{width:6px}
+.pr .msgs::-webkit-scrollbar-thumb{background:rgba(25,25,25,0.15);border-radius:3px}
+.pr textarea::placeholder{color:#949494;opacity:1}
+.pr input::placeholder{color:#767676;opacity:1}
+.pr input:focus-visible{outline:2px solid #835DE1;outline-offset:2px}
+.pr .mtab{transition:opacity .15s}
+.pr .mtab:hover{opacity:.7}
+.pr .alert{transition:filter .12s}
+.pr .alert:hover{filter:brightness(.98)}
+.pr button:focus-visible,.pr textarea:focus-visible{outline:2px solid #835DE1;outline-offset:2px}
+@keyframes prIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes prSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes prDim{from{opacity:0}to{opacity:1}}
+.pr .sheet{animation:prSheet .26s cubic-bezier(.2,.8,.2,1)}
+.pr .dim{animation:prDim .2s ease-out}
+@keyframes prOpen{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.pr .anim{animation:prIn .22s ease-out}
+.pr .panel{animation:prOpen .24s cubic-bezier(.2,.8,.2,1);transform-origin:bottom right}
+@keyframes prRail{from{clip-path:inset(0 170px 0 0)}to{clip-path:inset(0 0 0 0)}}
+.pr .rail-open{animation:prRail .22s cubic-bezier(.2,.8,.2,1)}
+.pr .rchip{background:transparent;transition:background .12s}
+.pr .rchip:hover,.pr .rchip.sel{background:rgba(25,25,25,0.1)}
+@keyframes prRailAi{from{clip-path:inset(0 220px 0 0)}to{clip-path:inset(0 0 0 0)}}
+</style>
+</helmet>
+<div class="pr" style="width: 375px; height: 812px; flex: none; position: relative; overflow: hidden; background: #FFFFFF; font-family: 'TT Norms Tochka Extended', Manrope, sans-serif; color: #191919; letter-spacing: 0.01em; display: flex; flex-direction: column">
+<!-- ═════════ Стартовый экран приложения (Главная). «Чат» в нижнем меню открывает прототип чата ═════════ -->
+<sc-if value="{{onMain}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; inset: 0; z-index: 30; background: #F5F5F7; display: flex; flex-direction: column">
+  <div class="noscroll" style="flex: 1; min-height: 0; overflow-y: auto">
+    <div style="padding: 12px 16px 120px; display: flex; flex-direction: column">
+      <!-- Шапка: клиент, уведомления, настройки -->
+      <div style="height: 44px; display: flex; align-items: center; justify-content: space-between">
+        <button type="button" class="ghost" aria-haspopup="listbox" style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 8px; margin-left: -8px; border-radius: 10px">
+          <span style="width: 32px; height: 32px; border-radius: 50%; background: #5E74D4; color: #FFFFFF; font-size: 12px; line-height: 32px; font-weight: 600; text-align: center; flex: none">{{orgInitials}}</span>
+          <span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919; white-space: nowrap">{{orgName}}</span>
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" style="flex: none"><path d="M4 11.5 9 6.5l5 5" fill="none" stroke="#191919" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div style="display: flex; align-items: center">
+          <button type="button" class="ib" aria-label="Уведомления, есть новые" style="width: 44px; height: 44px; position: relative">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z" fill="none" stroke="#191919" stroke-width="1.8" stroke-linejoin="round"></path><path d="M10 20.5a2.2 2.2 0 0 0 4 0" fill="none" stroke="#191919" stroke-width="1.8" stroke-linecap="round"></path></svg>
+            <span aria-hidden="true" style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: #E5484D; box-shadow: 0 0 0 2px #F5F5F7"></span>
+          </button>
+          <button type="button" class="ib" aria-label="Настройки" style="width: 44px; height: 44px">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 3h3.4l.5 2.4 1.7 1 2.3-.8 1.7 2.9-1.8 1.6v2l1.8 1.6-1.7 2.9-2.3-.8-1.7 1-.5 2.4h-3.4l-.5-2.4-1.7-1-2.3.8-1.7-2.9 1.8-1.6v-2L4.1 8.5l1.7-2.9 2.3.8 1.7-1z" fill="none" stroke="#191919" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="12" r="2.8" fill="none" stroke="#191919" stroke-width="1.7"></circle></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Поиск -->
+      <label style="margin-top: 16px; height: 44px; border-radius: 12px; background: #EBEBED; display: flex; align-items: center; gap: 10px; padding: 0 14px">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#767676" stroke-width="2"></circle><path d="M15.5 15.5 20 20" stroke="#767676" stroke-width="2" stroke-linecap="round"></path></svg>
+        <input type="search" aria-label="Поиск по Точке" placeholder="Поиск по Точке" style="flex: 1; min-width: 0; height: 40px; border: 0; background: transparent; font: inherit; font-size: 16px; color: #191919; outline: none; padding: 0">
+      </label>
+
+      <!-- Уведомление комплаенса; под ним — краешек следующей карточки -->
+      <div style="margin-top: 16px; position: relative; padding-bottom: 8px">
+        <div aria-hidden="true" style="position: absolute; left: 10px; right: 10px; bottom: 0; height: 24px; border-radius: 12px; background: #D9D0F6"></div>
+        <button type="button" class="alert" style="position: relative; width: 100%; box-sizing: border-box; padding: 16px; border-radius: 14px; background: #FFD7D4; display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 12px; line-height: 16px; color: #5C5C5C">Комплаенс</span>
+          <span style="font-size: 15px; line-height: 20px; font-weight: 600; color: #191919">Ответьте на запрос, чтобы избежать ограничений</span>
+          <span style="margin-top: 4px; font-size: 12px; line-height: 16px; color: #191919">До 29 ноября не позднее 23:59</span>
+        </button>
+      </div>
+
+      <!-- Вкладки продуктов -->
+      <div style="margin-top: 28px; display: flex; align-items: center; gap: 8px">
+        <div style="flex: 1; min-width: 0; overflow: hidden; display: flex; gap: 16px; white-space: nowrap; -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 20px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 20px), transparent)">
+          <button type="button" aria-current="true" style="flex: none; font-size: 24px; line-height: 30px; font-weight: 700; color: #191919">Счета</button>
+          <button type="button" class="mtab" style="flex: none; font-size: 24px; line-height: 30px; font-weight: 700; color: #8A8A8A">Валюта</button>
+          <button type="button" class="mtab" style="flex: none; font-size: 24px; line-height: 30px; font-weight: 700; color: #8A8A8A">Фонды</button>
+          <button type="button" class="mtab" style="flex: none; font-size: 24px; line-height: 30px; font-weight: 700; color: #8A8A8A">Кредиты</button>
+        </div>
+        <button type="button" class="ib" aria-label="Открыть счёт" style="width: 44px; height: 44px; margin-right: -8px">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#191919" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+      </div>
+
+      <!-- Счета -->
+      <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px">
+        <div style="background: #FFFFFF; border-radius: 16px; padding: 12px 16px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); display: flex; flex-direction: column">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span aria-hidden="true" style="width: 20px; height: 20px; border-radius: 50%; overflow: hidden; display: flex; flex-direction: column; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,0.08)"><span style="flex: 1; background: #FFFFFF"></span><span style="flex: 1; background: #1C57C8"></span><span style="flex: 1; background: #D52B1E"></span></span>
+              <span style="font-size: 14px; line-height: 18px; color: #191919">Расчётный</span>
+            </div>
+            <button type="button" class="ib" aria-label="Действия со счётом **3486" style="width: 44px; height: 44px; margin-right: -10px">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><g fill="#191919"><circle cx="5.5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="18.5" cy="12" r="2"></circle></g></svg>
+            </button>
+          </div>
+          <div style="margin-top: 6px; font-size: 22px; line-height: 28px; font-weight: 600; color: #191919">23 422 785,37 ₽</div>
+          <div style="margin-top: 4px; display: flex; align-items: center; justify-content: space-between">
+            <span style="font-size: 13px; line-height: 16px; color: #676767">**3486</span>
+            <span aria-label="Карт: 2" style="display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 16px; color: #676767">2<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="#676767" stroke-width="1.8"></rect><path d="M3 10h18M6.5 14.5h4" stroke="#676767" stroke-width="1.8" stroke-linecap="round"></path></svg></span>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border-radius: 16px; padding: 12px 16px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); display: flex; flex-direction: column">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span aria-hidden="true" style="width: 20px; height: 20px; border-radius: 50%; overflow: hidden; display: flex; flex-direction: column; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,0.08)"><span style="flex: 1; background: #FFFFFF"></span><span style="flex: 1; background: #1C57C8"></span><span style="flex: 1; background: #D52B1E"></span></span>
+              <span style="font-size: 14px; line-height: 18px; color: #191919">Расчётный</span>
+            </div>
+            <button type="button" class="ib" aria-label="Действия со счётом **6584" style="width: 44px; height: 44px; margin-right: -10px">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><g fill="#191919"><circle cx="5.5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="18.5" cy="12" r="2"></circle></g></svg>
+            </button>
+          </div>
+          <div style="margin-top: 6px; font-size: 22px; line-height: 28px; font-weight: 600; color: #191919">2 374,77 ₽</div>
+          <div style="margin-top: 4px; display: flex; align-items: center; justify-content: space-between">
+            <span style="font-size: 13px; line-height: 16px; color: #676767">**6584</span>
+            <span aria-label="Карт: 4" style="display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 16px; color: #676767">4<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="#676767" stroke-width="1.8"></rect><path d="M3 10h18M6.5 14.5h4" stroke="#676767" stroke-width="1.8" stroke-linecap="round"></path></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Итого по счетам -->
+      <div style="margin-top: 14px; display: flex; align-items: center; justify-content: space-between">
+        <button type="button" class="ghost" style="display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 6px; margin-left: -6px; border-radius: 8px; font-size: 14px; line-height: 18px; color: #3D3D3D">Всего 7 счетов на 2 549 670,21 ₽<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="#3D3D3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <button type="button" class="ib" aria-label="Скрыть суммы" style="width: 44px; height: 44px; margin-right: -10px">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10c2.5 3 5.5 4.5 9 4.5s6.5-1.5 9-4.5M12 14.5V17M7.2 13.4 5.8 15.6M16.8 13.4l1.4 2.2M3.8 11.5 2.5 13M20.2 11.5l1.3 1.5" fill="none" stroke="#3D3D3D" stroke-width="1.7" stroke-linecap="round"></path></svg>
+        </button>
+      </div>
+
+      <!-- Компания -->
+      <div style="margin-top: 32px; display: flex; align-items: center; justify-content: space-between">
+        <h2 style="margin: 0; font-size: 30px; line-height: 36px; font-weight: 700; color: #191919">Компания</h2>
+        <button type="button" style="height: 44px; font-size: 14px; line-height: 18px; font-weight: 500; color: #835DE1">Настроить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Затухание контента над нижним меню и плавающая кнопка -->
+  <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 56px; height: 28px; background: linear-gradient(rgba(245,245,247,0), #F5F5F7); pointer-events: none"></div>
+  <button type="button" class="fab" aria-label="Быстрые действия" style="position: absolute; left: 50%; bottom: 80px; margin-left: -24px; width: 48px; height: 48px; border-radius: 14px; background: #191919; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.18)">
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 2.8 6 13.2h5.4l-1.3 8 7.3-10.4h-5.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"></path></svg>
+  </button>
+
+  <!-- Нижнее меню: активна «Главная», «Чат» открывает прототип чата -->
+  <nav aria-label="Разделы приложения" style="flex: none; display: flex; height: 56px; padding-bottom: env(safe-area-inset-bottom); background: #FFFFFF; box-shadow: 0 -1px 0 rgba(25,25,25,0.06)">
+    <button type="button" class="tab" aria-current="page" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 3 10.4V20a1 1 0 0 0 1 1h5.5v-5.5h5V21H20a1 1 0 0 0 1-1v-9.6z" fill="#835DE1"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #835DE1">Главная</span>
+    </button>
+    <button type="button" class="tab" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#949494"></circle><path d="M12 7.5V12l3 2" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">История</span>
+    </button>
+    <button type="button" class="tab" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#949494"></circle><path d="M10.2 16.5V7.5h3a2.3 2.3 0 0 1 0 4.6h-4.4M8.8 14.4h4.6" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">Платежи</span>
+    </button>
+    <button type="button" class="tab" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><g fill="#949494"><rect x="3" y="3" width="8" height="8" rx="2.5"></rect><rect x="13" y="3" width="8" height="8" rx="2.5"></rect><rect x="3" y="13" width="8" height="8" rx="2.5"></rect><rect x="13" y="13" width="8" height="8" rx="2.5"></rect></g></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">Сервисы</span>
+    </button>
+    <button type="button" class="tab" onClick="{{openApp}}" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c5 0 9 3.4 9 7.6s-4 7.6-9 7.6c-.9 0-1.8-.1-2.6-.3L5 20.5l.9-3.6C4 15.5 3 13.4 3 11.1 3 6.9 7 3.5 12 3.5z" fill="#949494"></path><path d="M8 10h8M8 13.2h5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">Чат</span>
+    </button>
+  </nav>
+</div>
+</sc-if>
+<!-- ═════════ Мобильный чат: фиксированный экран 375×812 ═════════ -->
+<div style="flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column">
+  <!-- Выпадающее меню юрлиц -->
+  <sc-if value="{{orgMenu}}" hint-placeholder-val="{{ false }}">
+    <button type="button" onClick="{{closeOrg}}" aria-label="Закрыть список юрлиц" style="position: absolute; inset: 0; z-index: 5; cursor: default; background: transparent"></button>
+    <div role="listbox" aria-label="Юрлица" class="anim" style="position: absolute; z-index: 6; top: 48px; left: 12px; width: calc(100% - 24px); max-width: 320px; box-sizing: border-box; padding: 8px; background: #FFFFFF; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(25,25,25,0.05); display: flex; flex-direction: column; gap: 2px">
+      <sc-for list="{{orgs}}" as="o" hint-placeholder-count="3">
+        <button type="button" role="option" aria-selected="{{o.selected}}" class="cell" onClick="{{o.pick}}" style="display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 10px">
+          <span style="width: 32px; height: 32px; border-radius: 10px; background: #835DE1; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex: none; font-size: 12px; line-height: 15px; font-weight: 600">{{o.initials}}</span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{o.name}}</span>
+            <span style="font-size: 12px; line-height: 15px; color: #676767">{{o.kind}}</span>
+          </span>
+          <sc-if value="{{o.selected}}" hint-placeholder-val="{{ false }}">
+            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style="flex: none"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="#835DE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+
+  <!-- ─── Главная чата ─── -->
+  <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-direction: column; flex: 1; min-height: 0">
+    <div style="height: 94px; box-sizing: border-box; padding: 12px 12px 0 20px; display: flex; flex-direction: column; gap: 8px; flex: none">
+      <div style="display: flex; align-items: center; justify-content: space-between; height: 32px">
+        <button type="button" class="ghost" onClick="{{toggleOrg}}" aria-haspopup="listbox" aria-expanded="{{orgOpen}}" style="display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 8px; margin-left: -8px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919">
+          <span>{{orgName}}</span>
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" style="transition: transform .15s; transform: {{chevronRot}}"><path transform="matrix(1 0 0 -1 2.7 12.6)" d="M5.7 0.2C6.1 -0.1 6.5 -0.1 6.9 0.2L12.3 4.7C12.7 5 12.7 5.6 12.4 6C12.1 6.4 11.5 6.4 11.1 6.1L6.3 2.1L1.5 6.1C1.1 6.4 0.5 6.4 0.2 6C-0.1 5.6 -0.1 5 0.3 4.7L5.7 0.2Z" fill="#191919"></path></svg>
+        </button>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="display: flex; gap: 10px">
+        <sc-if value="{{tabChats}}" hint-placeholder-val="{{ true }}">
+          <button type="button" style="height: 32px; padding: 0 8px; border-radius: 8px; cursor: default; box-shadow: inset 0 0 0 1px rgba(25,25,25,0.25); font-size: 14px; line-height: 18px; font-weight: 600; color: #191919">Поддержка</button>
+          <button type="button" class="chip" onClick="{{toAi}}" style="height: 32px; padding: 0 8px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919">ИИ-Ассистент</button>
+        </sc-if>
+        <sc-if value="{{tabAi}}" hint-placeholder-val="{{ false }}">
+          <button type="button" class="chip" onClick="{{backFromAi}}" style="height: 32px; padding: 0 8px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919; display: inline-flex; align-items: center; gap: 6px">Поддержка<sc-if value="{{hasTotalUnread}}" hint-placeholder-val="{{ false }}"><span style="min-width: 20px; height: 16px; padding: 0 5px; box-sizing: border-box; border-radius: 8px; background: #676767; color: #FFFFFF; font-size: 10px; line-height: 16px; font-weight: 600; text-align: center">{{totalUnread}}</span></sc-if></button>
+          <button type="button" style="height: 32px; padding: 0 8px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(25,25,25,0.25); font-size: 14px; line-height: 18px; font-weight: 600; color: #191919">ИИ-Ассистент</button>
+        </sc-if>
+      </div>
+      <div style="display: flex; gap: 8px; margin-right: -4px">
+        <sc-if value="{{tabChats}}" hint-placeholder-val="{{ true }}"><button type="button" class="ib" aria-label="Поиск">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(2 2)" d="M8 0C12.4 0 16 3.6 16 8C16 9.8 15.4 11.6 14.3 12.9L18.7 17.3C19.1 17.7 19.1 18.3 18.7 18.7C18.3 19.1 17.7 19.1 17.3 18.7L12.9 14.3C11.6 15.4 9.8 16 8 16C3.6 16 0 12.4 0 8C0 3.6 3.6 0 8 0ZM8 2C4.7 2 2 4.7 2 8C2 11.3 4.7 14 8 14C11.3 14 14 11.3 14 8C14 4.7 11.3 2 8 2Z" fill="#949494"></path></svg>
+        </button></sc-if>
+        <sc-if value="{{tabAi}}" hint-placeholder-val="{{ false }}"></sc-if>
+      </div>
+      </div>
+    </div>
+
+    <sc-if value="{{tabChats}}" hint-placeholder-val="{{ true }}">
+    <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 32px 20px 20px; box-sizing: border-box; display: flex; flex-direction: column">
+      <div style="font-size: 14px; line-height: 18px; color: #676767; margin-bottom: 16px">Общение по&nbsp;темам поможет сохранить контекст обсуждения, чтобы решать вопросы быстрее и&nbsp;точнее</div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <!-- Персональный бухгалтер. Аватар опущен на 4 px — его верх совпадает с верхом букв названия; шеврон по центру ячейки -->
+        <button type="button" class="cell" onClick="{{openAcc}}" style="display: flex; align-items: flex-start; gap: 12px; padding: 8px; margin: 0 -8px; border-radius: 12px">
+          <span style="position: relative; width: 32px; height: 32px; margin-top: 4px; border-radius: 10px; background: #A8A3F1; display: flex; align-items: center; justify-content: center; flex: none">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(2 2.8)" d="M11.2 0C12.5 0 13.5 1 13.5 2.2L13.5 10.1C13.5 11.4 12.5 12.4 11.2 12.4L2.2 12.4C1 12.4 0 11.4 0 10.1L0 2.2C0 1 1 0 2.2 0L11.2 0ZM11.1 1.9C10.9 1.6 10.5 1.6 10.3 1.9L2.4 9.7C2.2 9.9 2.2 10.3 2.4 10.5C2.6 10.7 3 10.7 3.2 10.5L11.1 2.6C11.3 2.4 11.3 2.1 11.1 1.9ZM8.4 8.4C8.1 8.4 7.9 8.7 7.9 9C7.9 9.3 8.1 9.6 8.4 9.6L11.2 9.6C11.6 9.6 11.8 9.3 11.8 9C11.8 8.7 11.6 8.4 11.2 8.4L8.4 8.4ZM3.7 1.7C3.4 1.7 3.1 1.9 3.1 2.2L3.1 3.1L2.2 3.1C1.9 3.1 1.7 3.4 1.7 3.7C1.7 4 1.9 4.2 2.2 4.2L3.1 4.2L3.1 5.1C3.1 5.4 3.4 5.6 3.7 5.6C4 5.6 4.2 5.4 4.2 5.1L4.2 4.2L5.1 4.2C5.4 4.2 5.6 4 5.6 3.7C5.6 3.4 5.4 3.1 5.1 3.1L4.2 3.1L4.2 2.2C4.2 1.9 4 1.7 3.7 1.7Z" fill="#FFFFFF"></path></svg>
+            <!-- Фиолетовая точка: специалист в чате; счётчик непрочитанных лежит поверх неё -->
+            <sc-if value="{{accActive}}" hint-placeholder-val="{{ false }}"><span title="Бухгалтер в чате" aria-label="Бухгалтер в чате" style="position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: #835DE1; box-shadow: 0 0 0 2px #FFFFFF"></span></sc-if>
+            <sc-if value="{{acc.hasUnread}}" hint-placeholder-val="{{ true }}">
+              <span style="position: absolute; top: -4px; right: -6px; width: 16px; height: 16px; padding: 0; box-sizing: border-box; border-radius: 50%; background: #D84D4D; box-shadow: 0 0 0 2px #FFFFFF; color: #FFFFFF; font-size: 10px; line-height: 16px; font-weight: 600; text-align: center">{{acc.unread}}</span>
+            </sc-if>
+          </span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Персональный бухгалтер</span>
+            <span style="font-size: 14px; line-height: 18px; color: #676767">Налоги и взносы, копилка, сдача отчётности, требования</span>
+          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex: none; align-self: center"><path transform="matrix(0 -1 1 0 5 14)" d="M10.4 0.2C10.8 -0.1 11.4 -0.1 11.8 0.4C12.1 0.8 12.1 1.4 11.6 1.8L6.6 5.8C6.3 6.1 5.7 6.1 5.4 5.8L0.4 1.8C-0.1 1.4 -0.1 0.8 0.2 0.4C0.6 -0.1 1.2 -0.1 1.6 0.2L6 3.7L10.4 0.2Z" fill="#949494"></path></svg>
+        </button>
+
+        <!-- Поддержка -->
+        <button type="button" class="cell" onClick="{{openSup}}" style="display: flex; align-items: flex-start; gap: 12px; padding: 8px; margin: 0 -8px; border-radius: 12px">
+          <span style="position: relative; width: 32px; height: 32px; margin-top: 4px; border-radius: 10px; background: #DE9C7E; display: flex; align-items: center; justify-content: center; flex: none">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(1.5 1.5)" d="M12.8 0C14 0 15 1 15 2.2L15 11.2C15 12.5 14 13.5 12.8 13.5L5.3 13.5L1.1 15.9C0.6 16.1 0 15.8 0 15.2L0 2.2C0 1 1 0 2.2 0L12.8 0ZM6 7.5C5.6 7.5 5.2 7.8 5.2 8.2C5.2 8.7 5.6 9 6 9L9 9C9.4 9 9.8 8.7 9.8 8.2C9.8 7.8 9.4 7.5 9 7.5L6 7.5ZM6 4.5C5.6 4.5 5.2 4.8 5.2 5.2C5.2 5.7 5.6 6 6 6L10.5 6C10.9 6 11.2 5.7 11.2 5.2C11.2 4.8 10.9 4.5 10.5 4.5L6 4.5Z" fill="#FFFFFF"></path></svg>
+            <sc-if value="{{supActive}}" hint-placeholder-val="{{ false }}"><span title="Специалист в чате" aria-label="Специалист в чате" style="position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: #835DE1; box-shadow: 0 0 0 2px #FFFFFF"></span></sc-if>
+            <sc-if value="{{sup.hasUnread}}" hint-placeholder-val="{{ false }}">
+              <span style="position: absolute; top: -4px; right: -6px; width: 16px; height: 16px; padding: 0; box-sizing: border-box; border-radius: 50%; background: #D84D4D; box-shadow: 0 0 0 2px #FFFFFF; color: #FFFFFF; font-size: 10px; line-height: 16px; font-weight: 600; text-align: center">{{sup.unread}}</span>
+            </sc-if>
+          </span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Общий чат</span>
+            <span style="font-size: 14px; line-height: 18px; color: #676767">Другие вопросы, сообщения от банка</span>
+          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex: none; align-self: center"><path transform="matrix(0 -1 1 0 5 14)" d="M10.4 0.2C10.8 -0.1 11.4 -0.1 11.8 0.4C12.1 0.8 12.1 1.4 11.6 1.8L6.6 5.8C6.3 6.1 5.7 6.1 5.4 5.8L0.4 1.8C-0.1 1.4 -0.1 0.8 0.2 0.4C0.6 -0.1 1.2 -0.1 1.6 0.2L6 3.7L10.4 0.2Z" fill="#949494"></path></svg>
+        </button>
+      </div>
+
+      <div style="height: 1px; background: rgba(25,25,25,0.2); margin: 16px 0"></div>
+
+      <button type="button" class="cell" onClick="{{openSaved}}" style="display: flex; align-items: center; gap: 12px; padding: 8px; margin: 0 -8px; border-radius: 12px">
+        <span style="width: 32px; height: 32px; border-radius: 10px; background: #AEAEAE; display: flex; align-items: center; justify-content: center; flex: none">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(3.4 2.2)" d="M9 0C10.2 0 11.2 1 11.2 2.2L11.2 12.6C11.2 13.5 10.3 14.1 9.6 13.6L5.6 11.2L1.7 13.6C0.9 14.1 0 13.5 0 12.6L0 2.2C0 1 1 0 2.2 0L9 0Z" fill="#FFFFFF"></path></svg>
+        </span>
+        <span style="flex: 1; font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Сохранённые сообщения</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex: none"><path transform="matrix(0 -1 1 0 5 14)" d="M10.4 0.2C10.8 -0.1 11.4 -0.1 11.8 0.4C12.1 0.8 12.1 1.4 11.6 1.8L6.6 5.8C6.3 6.1 5.7 6.1 5.4 5.8L0.4 1.8C-0.1 1.4 -0.1 0.8 0.2 0.4C0.6 -0.1 1.2 -0.1 1.6 0.2L6 3.7L10.4 0.2Z" fill="#949494"></path></svg>
+      </button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{tabAi}}" hint-placeholder-val="{{ false }}">
+      <div style="flex: 1; min-height: 0; display: flex; flex-direction: column">
+        <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 0 20px; display: flex; flex-direction: column; justify-content: flex-end">
+          <div style="font-size: 22px; line-height: 28px; font-weight: 600; color: #191919">Популярное для вас</div>
+          <div style="margin-top: 6px; font-size: 14px; line-height: 18px; color: #676767">Используйте быстрый переход на частые запросы или задайте новый вопрос</div>
+          <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px">
+          <button type="button" class="aiq" style="display: flex; align-items: center; gap: 16px; min-height: 56px; padding: 12px 16px; box-sizing: border-box; border-radius: 12px; width: 100%">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><g stroke="#835DE1" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M4 4h16"></path><path d="M6 8v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"></path><path d="M12 9v6M9.5 12.5 12 15l2.5-2.5"></path></g></svg>
+            <span style="flex: 1; font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Где я могу снять деньги без комиссии?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex: none"><path transform="matrix(0 -1 1 0 5 14)" d="M10.4 0.2C10.8 -0.1 11.4 -0.1 11.8 0.4C12.1 0.8 12.1 1.4 11.6 1.8L6.6 5.8C6.3 6.1 5.7 6.1 5.4 5.8L0.4 1.8C-0.1 1.4 -0.1 0.8 0.2 0.4C0.6 -0.1 1.2 -0.1 1.6 0.2L6 3.7L10.4 0.2Z" fill="#949494"></path></svg>
+          </button>
+          <button type="button" class="aiq" style="display: flex; align-items: center; gap: 16px; min-height: 56px; padding: 12px 16px; box-sizing: border-box; border-radius: 12px; width: 100%">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><g stroke="#835DE1" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="3.5" y="5" width="17" height="15" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></g></svg>
+            <span style="flex: 1; font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Регламент зачисления платежей</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex: none"><path transform="matrix(0 -1 1 0 5 14)" d="M10.4 0.2C10.8 -0.1 11.4 -0.1 11.8 0.4C12.1 0.8 12.1 1.4 11.6 1.8L6.6 5.8C6.3 6.1 5.7 6.1 5.4 5.8L0.4 1.8C-0.1 1.4 -0.1 0.8 0.2 0.4C0.6 -0.1 1.2 -0.1 1.6 0.2L6 3.7L10.4 0.2Z" fill="#949494"></path></svg>
+          </button>
+          <button type="button" class="aiq" style="display: flex; align-items: center; gap: 16px; min-height: 56px; padding: 12px 16px; box-sizing: border-box; border-radius: 12px; width: 100%">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><g stroke="#835DE1" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 10h18M14 15.5h5M17 13.5l2 2-2 2"></path></g></svg>
+            <span style="flex: 1; font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Как увеличить лимиты на переводы физлицам?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex: none"><path transform="matrix(0 -1 1 0 5 14)" d="M10.4 0.2C10.8 -0.1 11.4 -0.1 11.8 0.4C12.1 0.8 12.1 1.4 11.6 1.8L6.6 5.8C6.3 6.1 5.7 6.1 5.4 5.8L0.4 1.8C-0.1 1.4 -0.1 0.8 0.2 0.4C0.6 -0.1 1.2 -0.1 1.6 0.2L6 3.7L10.4 0.2Z" fill="#949494"></path></svg>
+          </button>
+          </div>
+        </div>
+        <div style="flex: none; padding: 16px 20px 12px">
+          <div style="height: 48px; box-sizing: border-box; border-radius: 24px; box-shadow: inset 0 0 0 1px rgba(25,25,25,0.25); display: flex; align-items: center; gap: 10px; padding: 0 10px 0 20px">
+            <input type="text" aria-label="Вопрос ИИ-Ассистенту" placeholder="Спросить ИИ-Ассистента" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 16px; line-height: 20px; color: #191919; letter-spacing: 0.01em; padding: 0">
+            <button type="button" aria-label="Отправить вопрос" style="width: 28px; height: 28px; border-radius: 50%; background: #C8C8C8; display: flex; align-items: center; justify-content: center; flex: none">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(90 12 12)"><path transform="translate(2 4)" d="M7.3 0.3C7.7 -0.1 8.3 -0.1 8.7 0.3C9.1 0.7 9.1 1.3 8.7 1.7L3.4 7L19 7C19.6 7 20 7.5 20 8C20 8.6 19.6 9 19 9L3.4 9L8.7 14.3C9.1 14.7 9.1 15.3 8.7 15.7C8.3 16.1 7.7 16.1 7.3 15.7L0.3 8.7C-0.1 8.3 -0.1 7.7 0.3 7.3L7.3 0.3Z" fill="#FFFFFF"></path></g></svg>
+            </button>
+          </div>
+          <div style="margin-top: 10px; font-size: 12px; line-height: 15px; color: #676767; text-align: center">ИИ-Ассистент может ошибаться, рекомендуем проверять ответы. <button type="button" class="ico" style="font-size: 12px; line-height: 15px; color: #835DE1; text-align: center">Условия использования</button></div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+
+  <!-- ─── Чат по теме ─── -->
+  <sc-if value="{{isChat}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; flex: 1; min-height: 0">
+    <!-- Мобильная шапка чата по теме: назад к списку тем, юрлицо и название темы по центру, поиск -->
+    <sc-if value="{{topicsMode}}" hint-placeholder-val="{{ false }}">
+    <div style="height: 72px; box-sizing: border-box; padding: 0 12px; display: flex; align-items: center; gap: 20px; flex: none">
+      <button type="button" class="ib" onClick="{{goBack}}" aria-label="Назад к списку тем" style="position: relative">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4.5M10.5 5.5 4 12l6.5 6.5" fill="none" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <sc-if value="{{otherUnread}}" hint-placeholder-val="{{ false }}"><span aria-label="Непрочитанные в других темах" style="position: absolute; top: -2px; right: -6px; min-width: 16px; height: 16px; padding: 0 4px; box-sizing: border-box; border-radius: 8px; background: #D84D4D; box-shadow: 0 0 0 2px #FFFFFF; color: #FFFFFF; font-size: 10px; line-height: 16px; font-weight: 600; text-align: center">{{otherUnreadCount}}</span></sc-if>
+      </button>
+      <div style="flex: 1; min-width: 0; height: 50px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; text-align: left">
+        <span style="font-size: 12px; line-height: 15px; color: #676767; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%">{{orgName}}</span>
+        <span style="font-size: 16px; line-height: 20px; font-weight: 600; color: #191919; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%">{{chat.title}}</span>
+        <!-- Статус под названием: кто из специалистов сейчас ведёт диалог в этой теме -->
+        <sc-if value="{{chatOnline}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; line-height: 15px; color: #835DE1; white-space: nowrap">{{chatOnlineText}}</span></sc-if>
+      </div>
+      <button type="button" class="ib" aria-label="Поиск">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(2 2)" d="M8 0C12.4 0 16 3.6 16 8C16 9.8 15.4 11.6 14.3 12.9L18.7 17.3C19.1 17.7 19.1 18.3 18.7 18.7C18.3 19.1 17.7 19.1 17.3 18.7L12.9 14.3C11.6 15.4 9.8 16 8 16C3.6 16 0 12.4 0 8C0 3.6 3.6 0 8 0ZM8 2C4.7 2 2 4.7 2 8C2 11.3 4.7 14 8 14C11.3 14 14 11.3 14 8C14 4.7 11.3 2 8 2Z" fill="#949494"></path></svg>
+      </button>
+    </div>
+    </sc-if>
+    <sc-if value="{{singleMode}}" hint-placeholder-val="{{ true }}">
+    <div style="height: 94px; box-sizing: border-box; padding: 12px 12px 0 20px; display: flex; flex-direction: column; gap: 8px; flex: none">
+      <div style="display: flex; align-items: center; justify-content: space-between; height: 32px">
+        <button type="button" class="ghost" onClick="{{toggleOrg}}" aria-haspopup="listbox" aria-expanded="{{orgOpen}}" style="display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 8px; margin-left: -8px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919">
+          <span>{{orgName}}</span>
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" style="transition: transform .15s; transform: {{chevronRot}}"><path transform="matrix(1 0 0 -1 2.7 12.6)" d="M5.7 0.2C6.1 -0.1 6.5 -0.1 6.9 0.2L12.3 4.7C12.7 5 12.7 5.6 12.4 6C12.1 6.4 11.5 6.4 11.1 6.1L6.3 2.1L1.5 6.1C1.1 6.4 0.5 6.4 0.2 6C-0.1 5.6 -0.1 5 0.3 4.7L5.7 0.2Z" fill="#191919"></path></svg>
+        </button>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="display: flex; gap: 10px">
+        <sc-if value="{{tabChats}}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{supTabStatic}}" hint-placeholder-val="{{ true }}"><button type="button" style="height: 32px; padding: 0 8px; border-radius: 8px; cursor: default; box-shadow: inset 0 0 0 1px rgba(25,25,25,0.25); font-size: 14px; line-height: 18px; font-weight: 600; color: #191919">Поддержка</button></sc-if><sc-if value="{{savedOn}}" hint-placeholder-val="{{ false }}"><button type="button" class="chip" onClick="{{backToSup}}" style="height: 32px; padding: 0 8px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919">Поддержка</button></sc-if>
+          <button type="button" class="chip" onClick="{{toAi}}" style="height: 32px; padding: 0 8px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919">ИИ-Ассистент</button>
+        </sc-if>
+        <sc-if value="{{tabAi}}" hint-placeholder-val="{{ false }}">
+          <button type="button" class="chip" onClick="{{backFromAi}}" style="height: 32px; padding: 0 8px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919; display: inline-flex; align-items: center; gap: 6px">Поддержка<sc-if value="{{hasTotalUnread}}" hint-placeholder-val="{{ false }}"><span style="min-width: 20px; height: 16px; padding: 0 5px; box-sizing: border-box; border-radius: 8px; background: #676767; color: #FFFFFF; font-size: 10px; line-height: 16px; font-weight: 600; text-align: center">{{totalUnread}}</span></sc-if></button>
+          <button type="button" style="height: 32px; padding: 0 8px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(25,25,25,0.25); font-size: 14px; line-height: 18px; font-weight: 600; color: #191919">ИИ-Ассистент</button>
+        </sc-if>
+      </div>
+      <div style="display: flex; gap: 8px; margin-right: -4px">
+        <sc-if value="{{singleMode}}" hint-placeholder-val="{{ true }}"><button type="button" class="ib" onClick="{{toggleSaved}}" aria-label="Сохранённые сообщения"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(3 2)" d="M14 0C16.2 0 18 1.8 18 4L18 17L17.9 17C18 17.1 18 17.3 18 17.4L18 20C18 20.4 17.8 20.7 17.5 20.9C17.1 21.1 16.8 21 16.5 20.8L9 16L1.5 20.8C1.2 21 0.8 21.1 0.5 20.9C0.2 20.7 0 20.4 0 20L0 4C0 1.8 1.8 0 4 0L14 0ZM2 18.2L8.5 14L8.6 13.9C8.9 13.8 9.2 13.8 9.5 14L16 18.2L16 17.4C16 17.3 16 17.1 16.1 17L16 17L16 8L2 8L2 18.2ZM4 2C2.9 2 2 2.9 2 4L2 6L16 6L16 4C16 2.9 15.1 2 14 2L4 2Z" fill="{{savedFill}}"></path></svg></button></sc-if>
+        <sc-if value="{{tabChats}}" hint-placeholder-val="{{ true }}"><button type="button" class="ib" aria-label="Поиск">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(2 2)" d="M8 0C12.4 0 16 3.6 16 8C16 9.8 15.4 11.6 14.3 12.9L18.7 17.3C19.1 17.7 19.1 18.3 18.7 18.7C18.3 19.1 17.7 19.1 17.3 18.7L12.9 14.3C11.6 15.4 9.8 16 8 16C3.6 16 0 12.4 0 8C0 3.6 3.6 0 8 0ZM8 2C4.7 2 2 4.7 2 8C2 11.3 4.7 14 8 14C11.3 14 14 11.3 14 8C14 4.7 11.3 2 8 2Z" fill="#949494"></path></svg>
+        </button></sc-if>
+        <sc-if value="{{tabAi}}" hint-placeholder-val="{{ false }}"></sc-if>
+      </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- Плашка под табами: белая, с фиолетовой обводкой; клик открывает предложение, крестик спрашивает, отложить ли его -->
+    <sc-if value="{{showPromo}}" hint-placeholder-val="{{ true }}">
+      <div style="flex: none; padding: 12px 20px 4px">
+        <div class="promo" style="height: 44px; border-radius: 12px; box-shadow: inset 0 0 0 1px #835DE1; display: flex; align-items: center">
+          <button type="button" onClick="{{openOffer}}" style="flex: 1; min-width: 0; height: 44px; display: flex; align-items: center; gap: 10px; padding: 0 8px 0 12px; box-sizing: border-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><path d="M13.2 2.8 6 13.2h5.4l-1.3 8 7.3-10.4h-5.5z" fill="#835DE1" stroke="#835DE1" stroke-width="2" stroke-linejoin="round"></path></svg>
+            <span style="font-size: 14px; line-height: 18px; font-weight: 600; color: #835DE1">Попробовать чаты по&nbsp;темам</span>
+          </button>
+          <button type="button" class="ico" onClick="{{askPromo}}" aria-label="Скрыть предложение" aria-haspopup="menu" aria-expanded="{{promoAsk}}" style="width: 32px; height: 32px; margin-right: 6px; display: flex; align-items: center; justify-content: center; flex: none">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="#835DE1" stroke-width="1.8" stroke-linecap="round"></path></svg>
+          </button>
+        </div>
+      </div>
+    </sc-if>
+
+    <div class="msgs" style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column-reverse">
+      <div style="display: flex; flex-direction: column; padding: 0 16px 16px">
+        <sc-if value="{{chat.isEmpty}}" hint-placeholder-val="{{ false }}">
+          <div style="height: 520px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 14px; line-height: 18px; color: #949494; padding: 0 40px">[Пустое состояние «Сохранённых сообщений» — нет в макетах]</div>
+        </sc-if>
+
+        <sc-for list="{{chat.items}}" as="m" hint-placeholder-count="3">
+          <sc-if value="{{m.gapL}}" hint-placeholder-val="{{ true }}"><div style="height: 10px; flex: none"></div></sc-if>
+          <sc-if value="{{m.gapS}}" hint-placeholder-val="{{ false }}"><div style="height: 5px; flex: none"></div></sc-if>
+
+          <sc-if value="{{m.isDate}}" hint-placeholder-val="{{ false }}">
+            <div style="height: 70px; flex: none; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; font-weight: 500; color: #949494">{{m.text}}</div>
+          </sc-if>
+
+          <sc-if value="{{m.isIn}}" hint-placeholder-val="{{ true }}">
+            <div class="anim" style="align-self: flex-start; max-width: 295px; min-width: 120px; box-sizing: border-box; background: rgba(25,25,25,0.05); border-radius: 10px; padding: 10px 15px 5px; display: flex; flex-direction: column">
+              <sc-if value="{{m.showHeader}}" hint-placeholder-val="{{ true }}">
+                <div style="display: flex; align-items: center; gap: 10px; margin: -2px 0 8px">
+                  <sc-if value="{{m.isKarina}}" hint-placeholder-val="{{ true }}"><img src="./assets/avatar-karina.png" alt="" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: #F7F7F7; flex: none"></sc-if>
+                  <sc-if value="{{m.isAndrey}}" hint-placeholder-val="{{ false }}"><img src="./assets/avatar-andrey.png" alt="" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: #F7F7F7; flex: none"></sc-if><sc-if value="{{m.isBank}}" hint-placeholder-val="{{ false }}"><span style="width: 24px; height: 24px; border-radius: 50%; background: #835DE1; color: #FFFFFF; font-size: 12px; line-height: 24px; font-weight: 700; text-align: center; flex: none">Т</span></sc-if><sc-if value="{{m.isExpert}}" hint-placeholder-val="{{ false }}"><span style="width: 24px; height: 24px; border-radius: 50%; background: #A8A3F1; color: #FFFFFF; font-size: 12px; line-height: 24px; font-weight: 700; text-align: center; flex: none">В</span></sc-if><sc-if value="{{m.isOlga}}" hint-placeholder-val="{{ false }}"><span style="width: 24px; height: 24px; border-radius: 50%; background: #DE9C7E; color: #FFFFFF; font-size: 12px; line-height: 24px; font-weight: 700; text-align: center; flex: none">О</span></sc-if>
+                  <span style="display: flex; flex-direction: column"><span style="font-size: 14px; line-height: 18px; font-weight: 500; color: #191919">{{m.author}}</span><sc-if value="{{m.hasRole}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; line-height: 15px; color: #949494">{{m.role}}</span></sc-if></span>
+                </div>
+              </sc-if>
+              <!-- Ответ на сообщение клиента: цитата -->
+              <sc-if value="{{m.hasReply}}" hint-placeholder-val="{{ false }}">
+                <button type="button" class="ico" onClick="{{m.goReply}}" aria-label="{{m.replyAria}}" aria-expanded="{{m.replyOpen}}" style="display: flex; gap: 8px; margin-bottom: 8px; width: 100%">
+                  <span style="width: 2px; border-radius: 1px; background: #C8C8C8; flex: none"></span>
+                  <sc-if value="{{m.replyShort}}" hint-placeholder-val="{{ true }}"><span style="font-size: 13px; line-height: 17px; color: #676767; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden">{{m.reply}}</span></sc-if><sc-if value="{{m.replyOpen}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; line-height: 17px; color: #676767; white-space: pre-wrap">{{m.reply}}</span></sc-if>
+                </button>
+              </sc-if>
+              <sc-if value="{{m.isText}}" hint-placeholder-val="{{ true }}">
+                <div style="font-size: 16px; line-height: 20px; color: #191919; white-space: pre-wrap">{{m.text}}</div>
+                <sc-if value="{{m.hasLink}}" hint-placeholder-val="{{ false }}"><div style="margin-top: 8px; font-size: 16px; line-height: 20px; color: #191919">{{m.linkPre}}<span class="lnk">{{m.linkLabel}}</span>{{m.linkPost}}</div></sc-if>
+              </sc-if>
+              <sc-if value="{{m.isFile}}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; align-items: center; gap: 10px; padding-top: 5px">
+                  <span style="width: 40px; height: 40px; border-radius: 10px; background: rgba(25,25,25,0.05); display: flex; align-items: center; justify-content: center; flex: none">
+                    <svg width="20" height="20" viewBox="0 0 20 20" role="img" aria-label="PDF"><path transform="translate(2.5 1.7)" d="M0 1.7C0 0.8 0.8 0 1.7 0L9.2 0L15 5.8L15 15C15 15.9 14.2 16.7 13.3 16.7L1.7 16.7C0.8 16.7 0 15.9 0 15L0 1.7Z" fill="#D64B33"></path><path transform="translate(11.7 1.7)" d="M0 0L0 4.2C0 5.1 0.8 5.8 1.7 5.8L5.8 5.8L0 0Z" fill="#FFFFFF"></path><g transform="translate(6.3 11)" fill="#FFFFFF"><path d="M7.5 2.1L6.4 2.1L6.4 3.5L5.7 3.5L5.7 0L7.6 0L7.6 0.6L6.4 0.6L6.4 1.5L7.5 1.5L7.5 2.1Z"></path><path d="M2.9 3.5L2.9 0L3.8 0C4.2 0 4.5 0.1 4.8 0.4C5 0.7 5.2 1 5.2 1.5L5.2 2.1C5.2 2.5 5 2.9 4.8 3.2C4.5 3.4 4.2 3.5 3.8 3.5L2.9 3.5ZM3.6 0.6L3.6 3L3.8 3C4 3 4.2 2.9 4.3 2.8C4.4 2.6 4.4 2.4 4.4 2.1L4.4 1.5C4.4 1.2 4.4 0.9 4.3 0.8C4.2 0.7 4 0.6 3.8 0.6L3.6 0.6Z"></path><path d="M0.7 2.3L0.7 3.5L0 3.5L0 0L1.2 0C1.6 0 1.8 0.1 2 0.3C2.3 0.6 2.4 0.8 2.4 1.2C2.4 1.5 2.3 1.8 2.1 2C1.9 2.2 1.6 2.3 1.2 2.3L0.7 2.3ZM0.7 1.7L1.2 1.7C1.4 1.7 1.4 1.7 1.5 1.6C1.6 1.5 1.6 1.4 1.6 1.2C1.6 1 1.6 0.9 1.5 0.8C1.4 0.7 1.4 0.6 1.2 0.6L0.7 0.6L0.7 1.7Z"></path></g></svg>
+                  </span>
+                  <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                    <span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">{{m.fileName}}</span>
+                    <span style="font-size: 12px; line-height: 15px; color: #676767">{{m.fileMeta}}</span>
+                  </span>
+                </div>
+              </sc-if>
+              <div style="align-self: flex-end; font-size: 12px; line-height: 15px; color: #949494; margin-top: 5px">{{m.time}}</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{m.isOut}}" hint-placeholder-val="{{ false }}">
+            <div class="anim" id="msg-{{m.id}}" style="align-self: flex-end; max-width: 295px; display: flex; flex-direction: column; align-items: flex-end; scroll-margin: 40px">
+              <div class="{{m.flashCls}}" style="min-width: 90px; box-sizing: border-box; background: #EFEDF8; border-radius: 10px; padding: 10px 15px 5px; display: flex; flex-direction: column">
+                <sc-if value="{{m.hasTransfer}}" hint-placeholder-val="{{ false }}">
+                  <button type="button" class="ico" onClick="{{m.goTransfer}}" aria-label="Перейти в чат, из которого перенесено сообщение" style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px">
+                    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="flex: none"><path transform="translate(1.5 1.5)" d="M0.4 0C0.6 0 0.8 0.2 0.8 0.4L0.8 4.5C0.8 5.5 1.6 6.4 2.6 6.4L7.6 6.4L6.1 5.2C6 5 6 4.8 6.1 4.6C6.2 4.5 6.5 4.5 6.6 4.6L8.9 6.5C8.9 6.5 9 6.6 9 6.8C9 6.9 8.9 7 8.9 7L6.6 8.9C6.5 9.1 6.2 9 6.1 8.9C6 8.7 6 8.5 6.1 8.3L7.6 7.1L2.6 7.1C1.2 7.1 0 6 0 4.5L0 0.4C0 0.2 0.2 0 0.4 0Z" fill="#949494"></path></svg>
+                    <span style="font-size: 12px; line-height: 15px; color: #676767">{{m.transfer}}</span>
+                  </button>
+                </sc-if>
+                <div style="font-size: 16px; line-height: 20px; color: #191919; white-space: pre-wrap">{{m.text}}</div>
+                <div style="align-self: flex-end; font-size: 12px; line-height: 15px; color: #949494; margin-top: 5px">{{m.time}}</div>
+              </div>
+              <sc-if value="{{m.hasNote}}" hint-placeholder-val="{{ false }}">
+                <button type="button" class="note {{m.noteCls}}" onClick="{{m.goNote}}" aria-label="Перейти в «Общий чат»" style="display: flex; align-items: center; gap: 4px; box-sizing: border-box; height: 19px; overflow: hidden; padding: 2px 6px; margin: 5px -4px 10px 0; border-radius: 6px">
+                  <span style="font-size: 12px; line-height: 15px; color: #676767">{{m.note}}</span>
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path transform="translate(0.8 1.3)" d="M6 0.4C6 0 6.4 -0.1 6.7 0.1L10 3.8C10.3 4.1 10.3 4.5 10 4.8L6.7 8.5C6.4 8.7 6 8.6 6 8.2L6 6.5C6 6.3 5.8 6.2 5.6 6.2L4.5 6.2C3.1 6.2 1.8 6.8 0.9 8L0.6 8.3C0.4 8.6 0 8.4 0 8.1C0 5 2.5 2.4 5.7 2.4C5.8 2.4 6 2.3 6 2.1L6 0.4Z" fill="#C8C8C8"></path></svg>
+                </button>
+              </sc-if>
+            </div>
+          </sc-if>
+          <!-- Быстрые ответы под автосообщением банка -->
+          <sc-if value="{{m.isChips}}" hint-placeholder-val="{{ false }}">
+            <div class="anim" style="align-self: flex-end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 10px; max-width: 360px">
+              <sc-for list="{{m.options}}" as="opt" hint-placeholder-count="2">
+                <button type="button" class="chip" onClick="{{opt.pick}}" style="height: 32px; padding: 0 12px; border-radius: 10px; font-size: 14px; line-height: 18px; font-weight: 500; color: #191919">{{opt.label}}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </sc-for>
+
+        <sc-if value="{{chat.pending}}" hint-placeholder-val="{{ false }}">
+          <div class="anim" style="height: 38px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; flex: none">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path transform="translate(3.2 0.8)" d="M8 0C8.9 0 9.6 0.7 9.6 1.6L9.6 4C9.6 4.8 8.8 5.6 8.4 6L8.4 6C8 6.4 6.7 7.2 6.7 7.2C6.7 7.2 8 8 8.4 8.4L8.4 8.4C8.8 8.8 9.6 9.6 9.6 10.4L9.6 12.8C9.6 13.7 8.9 14.4 8 14.4L1.6 14.4C0.7 14.4 0 13.7 0 12.8L0 10.4C0 9.6 0.7 8.8 1.2 8.4C1.6 8 2.9 7.2 2.9 7.2C2.9 7.2 1.6 6.4 1.2 6L1.2 6C0.8 5.6 0 4.8 0 4L0 1.6C0 0.7 0.7 0 1.6 0L8 0ZM2.4 10.8C1.9 11 1.6 11.6 1.6 12.1C1.6 12.5 1.9 12.8 2.3 12.8L7.3 12.8C7.7 12.8 8 12.5 8 12.1C8 11.6 7.7 11 7.2 10.8L4.8 9.6L2.4 10.8ZM4.8 4C3.6 4 2.9 4.4 2.6 4.7C2.5 4.7 2.5 4.9 2.6 4.9L4.8 6.4L7 4.9C7.1 4.9 7.1 4.7 7 4.7C6.7 4.4 6 4 4.8 4Z" fill="#949494"></path></svg>
+            <span style="font-size: 14px; line-height: 18px; color: #191919">Видим ваши сообщения и уже готовим ответ</span>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{showFailure}}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top: 20px; min-height: 38px; box-sizing: border-box; padding: 10px 15px; border-radius: 10px; background: #FCF5E3; font-size: 14px; line-height: 18px; color: #191919; text-align: center">Инфа о сбое</div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- Input Message: клик по полю подставляет реплику клиента из сценария -->
+    <div style="flex: none; padding: 2px 16px 12px; display: flex; align-items: flex-end; gap: 10px; background: #FFFFFF">
+      <div style="flex: 1; min-width: 0; min-height: 48px; box-sizing: border-box; border-radius: 24px; box-shadow: inset 0 0 0 1px rgba(25,25,25,0.25); display: flex; align-items: flex-end; gap: 10px; padding: 0 14px 0 14px">
+        <button type="button" class="ico" aria-label="Прикрепить файл" style="width: 24px; height: 24px; flex: none; margin-bottom: 12px">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(3 3)" d="M9 0C9.6 0 10 0.5 10 1L10 8L17 8C17.6 8 18 8.4 18 9C18 9.6 17.6 10 17 10L10 10L10 17C10 17.6 9.6 18 9 18C8.4 18 8 17.6 8 17L8 10L1 10C0.5 10 0 9.6 0 9C0 8.4 0.5 8 1 8L8 8L8 1C8 0.5 8.4 0 9 0Z" fill="#949494"></path></svg>
+        </button>
+        <button type="button" class="ico" aria-label="Эмодзи" style="width: 24px; height: 24px; flex: none; margin-bottom: 12px">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(2 2)" d="M10 0C15.5 0 20 4.5 20 10C20 15.5 15.5 20 10 20C4.5 20 0 15.5 0 10C0 4.5 4.5 0 10 0ZM10 2C5.6 2 2 5.6 2 10C2 14.4 5.6 18 10 18C14.4 18 18 14.4 18 10C18 5.6 14.4 2 10 2ZM5.7 11.7C6.1 11.4 6.8 11.6 7 12C7.5 12.8 8.2 13.3 8.9 13.8C9.3 14 9.8 14.1 10.2 14.2C10.8 14.3 11.1 14.9 11 15.4C10.9 16 10.3 16.3 9.8 16.2C9.2 16.1 8.5 15.8 8 15.5C6.9 14.9 6 14.1 5.4 13.1C5.1 12.6 5.2 12 5.7 11.7ZM12.8 5C13.3 4.9 13.9 5.2 14.1 5.7C14.7 7.3 15.1 8.7 15.4 9.7C15.6 10.2 15.7 10.5 15.8 10.8C15.8 10.8 15.8 10.9 15.9 10.9C15.9 11 15.9 11.1 15.9 11.2C16.1 11.8 15.7 12.2 15.6 12.3L15.6 12.3L15.5 12.4C15.3 12.5 15.3 12.5 15 12.6C14.8 12.7 14.5 12.8 14.1 12.9C13.2 13.1 11.9 13.1 10.6 12.4C10.1 12.2 9.9 11.6 10.1 11.1C10.3 10.6 10.9 10.4 11.4 10.6C12.4 11 13.1 11 13.7 10.9C13.7 10.9 13.7 10.9 13.8 10.9C13.7 10.7 13.6 10.5 13.6 10.3C13.2 9.3 12.8 8 12.2 6.3C12 5.8 12.3 5.2 12.8 5ZM8.5 5C9.3 5 10 5.7 10 6.5C10 7.3 9.3 8 8.5 8C7.7 8 7 7.3 7 6.5C7 5.7 7.7 5 8.5 5Z" fill="#949494"></path></svg>
+        </button>
+        <textarea aria-label="Сообщение" placeholder="Сообщение..." rows="{{rows}}" value="{{draft}}" onChange="{{onDraft}}" onKeyDown="{{onKey}}" onFocus="{{fillScript}}" onClick="{{fillScript}}" style="flex: 1; min-width: 0; resize: none; border: 0; outline: none; background: transparent; font: inherit; font-size: 16px; line-height: 20px; color: #191919; letter-spacing: 0.01em; padding: 14px 0; margin: 0; overflow-y: auto; max-height: 128px; field-sizing: content; display: block"></textarea>
+      <button type="button" class="ico" aria-label="Записать видеосообщение" style="width: 24px; height: 24px; flex: none; margin-bottom: 12px">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(2 2)" d="M10 0C11.8 0 13.3 0 14.5 0.1C15.7 0.2 16.7 0.5 17.5 1.1C18 1.5 18.5 2 18.9 2.5C19.5 3.3 19.8 4.3 19.9 5.5C20 6.7 20 8.2 20 10C20 11.8 20 13.3 19.9 14.5C19.8 15.7 19.5 16.7 18.9 17.5C18.5 18 18 18.5 17.5 18.9C16.7 19.5 15.7 19.8 14.5 19.9C13.3 20 11.8 20 10 20C8.2 20 6.7 20 5.5 19.9C4.3 19.8 3.3 19.5 2.5 18.9C2 18.5 1.5 18 1.1 17.5C0.5 16.7 0.2 15.7 0.1 14.5C0 13.3 0 11.8 0 10C0 8.2 0 6.7 0.1 5.5C0.2 4.3 0.5 3.3 1.1 2.5C1.5 2 2 1.5 2.5 1.1C3.3 0.5 4.3 0.2 5.5 0.1C6.7 0 8.2 0 10 0ZM10 2C8.1 2 6.8 2 5.7 2.1C4.7 2.2 4.1 2.4 3.6 2.8C3.3 3 3 3.3 2.8 3.6C2.4 4.1 2.2 4.7 2.1 5.7C2 6.8 2 8.1 2 10C2 11.9 2 13.2 2.1 14.3C2.2 15.3 2.4 15.9 2.8 16.4C3 16.7 3.3 17 3.6 17.2C4.1 17.6 4.7 17.8 5.7 17.9C6.8 18 8.1 18 10 18C11.9 18 13.2 18 14.3 17.9C15.3 17.8 15.9 17.6 16.4 17.2C16.7 17 17 16.7 17.2 16.4C17.6 15.9 17.8 15.3 17.9 14.3C18 13.2 18 11.9 18 10C18 8.1 18 6.8 17.9 5.7C17.8 4.7 17.6 4.1 17.2 3.6C17 3.3 16.7 3 16.4 2.8C15.9 2.4 15.3 2.2 14.3 2.1C13.2 2 11.9 2 10 2ZM10 5C12.8 5 15 7.2 15 10C15 12.8 12.8 15 10 15C7.2 15 5 12.8 5 10C5 7.2 7.2 5 10 5ZM10 7C8.3 7 7 8.3 7 10C7 11.7 8.3 13 10 13C11.7 13 13 11.7 13 10C13 8.3 11.7 7 10 7Z" fill="#949494"></path></svg>
+      </button>
+      <sc-if value="{{noDraft}}" hint-placeholder-val="{{ true }}">
+        <button type="button" class="ico" aria-label="Записать голосовое" style="width: 24px; height: 24px; flex: none; margin-bottom: 12px">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(3 0)" d="M16 11.7C16.2 11.2 16.7 10.9 17.3 11C17.8 11.2 18.1 11.7 18 12.3L18 12.3L17.9 12.3C17.9 12.3 17.9 12.3 17.9 12.4C17.9 12.4 17.9 12.5 17.9 12.6C17.8 12.8 17.7 13.1 17.5 13.5C17.2 14.2 16.7 15.1 16.1 16.1C14.8 17.8 12.9 19.6 10 19.9L10 23C10 23.6 9.6 24 9 24C8.4 24 8 23.6 8 23L8 19.9C5.1 19.6 3.1 17.8 1.9 16.1C1.3 15.1 0.8 14.2 0.5 13.5C0.3 13.1 0.2 12.8 0.1 12.6C0.1 12.5 0.1 12.4 0.1 12.4C0.1 12.3 0.1 12.3 0.1 12.3L0 12.3L0 12.3L0 12.3L0 12.3C-0.1 11.7 0.2 11.2 0.7 11C1.3 10.9 1.8 11.2 2 11.7L2 11.7C2 11.7 2 11.8 2 11.8C2 11.8 2 11.9 2 12C2.1 12.1 2.2 12.4 2.3 12.7C2.6 13.3 3 14.1 3.6 14.9C4.7 16.5 6.5 18 9 18L9 18C11.6 18 13.3 16.5 14.4 14.9C15 14.1 15.4 13.3 15.7 12.7C15.8 12.4 15.9 12.1 16 12C16 11.9 16 11.8 16 11.8C16 11.8 16 11.7 16 11.7L16 11.7ZM9 0C11.8 0 14 2.2 14 5L14 11C14 13.8 11.8 16 9 16C6.2 16 4 13.8 4 11L4 5C4 2.2 6.2 0 9 0ZM9 2C7.3 2 6 3.3 6 5L6 11C6 12.7 7.3 14 9 14C10.7 14 12 12.7 12 11L12 5C12 3.3 10.7 2 9 2Z" fill="#949494"></path></svg>
+        </button>
+      </sc-if>
+      <sc-if value="{{hasDraft}}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{send}}" aria-label="Отправить" style="width: 32px; height: 32px; margin: 0 -4px 8px; border-radius: 50%; background: #835DE1; display: flex; align-items: center; justify-content: center; flex: none">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(90 12 12)"><path transform="translate(2 4)" d="M7.3 0.3C7.7 -0.1 8.3 -0.1 8.7 0.3C9.1 0.7 9.1 1.3 8.7 1.7L3.4 7L19 7C19.6 7 20 7.5 20 8C20 8.6 19.6 9 19 9L3.4 9L8.7 14.3C9.1 14.7 9.1 15.3 8.7 15.7C8.3 16.1 7.7 16.1 7.3 15.7L0.3 8.7C-0.1 8.3 -0.1 7.7 0.3 7.3L7.3 0.3Z" fill="#FFFFFF"></path></g></svg>
+        </button>
+      </sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+  <!-- Нижнее меню приложения: активен «Чат» -->
+  <nav aria-label="Разделы приложения" style="flex: none; display: flex; height: 56px; padding-bottom: env(safe-area-inset-bottom); background: #FFFFFF; box-shadow: 0 -1px 0 rgba(25,25,25,0.06)">
+    <button type="button" class="tab" onClick="{{toMain}}" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 3 10.4V20a1 1 0 0 0 1 1h5.5v-5.5h5V21H20a1 1 0 0 0 1-1v-9.6z" fill="#949494"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">Главная</span>
+    </button>
+    <button type="button" class="tab" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#949494"></circle><path d="M12 7.5V12l3 2" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">История</span>
+    </button>
+    <button type="button" class="tab" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#949494"></circle><path d="M10.2 16.5V7.5h3a2.3 2.3 0 0 1 0 4.6h-4.4M8.8 14.4h4.6" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">Платежи</span>
+    </button>
+    <button type="button" class="tab" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><g fill="#949494"><rect x="3" y="3" width="8" height="8" rx="2.5"></rect><rect x="13" y="3" width="8" height="8" rx="2.5"></rect><rect x="3" y="13" width="8" height="8" rx="2.5"></rect><rect x="13" y="13" width="8" height="8" rx="2.5"></rect></g></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #949494">Сервисы</span>
+    </button>
+    <button type="button" class="tab" aria-current="page" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c5 0 9 3.4 9 7.6s-4 7.6-9 7.6c-.9 0-1.8-.1-2.6-.3L5 20.5l.9-3.6C4 15.5 3 13.4 3 11.1 3 6.9 7 3.5 12 3.5z" fill="#835DE1"></path><path d="M8 10h8M8 13.2h5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      <span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #835DE1">Чат</span>
+    </button>
+  </nav>
+  <!-- Шторка снизу по крестику на плашке: посмотреть предложение позже или больше не предлагать -->
+  <sc-if value="{{promoAsk}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; z-index: 8; display: flex; flex-direction: column; justify-content: flex-end">
+      <button type="button" class="dim" onClick="{{cancelPromo}}" aria-label="Оставить предложение" style="position: absolute; inset: 0; cursor: default; background: rgba(25,25,25,0.4)"></button>
+      <div role="dialog" aria-modal="true" aria-label="Скрыть предложение" class="sheet" style="position: relative; background: #FFFFFF; border-radius: 16px 16px 0 0; padding: 8px 12px 28px; display: flex; flex-direction: column; gap: 2px">
+        <span aria-hidden="true" style="width: 36px; height: 4px; border-radius: 2px; background: rgba(25,25,25,0.2); margin: 0 auto 10px"></span>
+        <div style="padding: 6px 8px 4px; font-size: 14px; line-height: 18px; font-weight: 400; color: #676767">Скрыть предложение?</div>
+        <button type="button" class="cell" onClick="{{snoozePromo}}" style="display: flex; flex-direction: column; gap: 2px; padding: 10px 8px; border-radius: 10px">
+          <span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Посмотреть позже</span>
+          <span style="font-size: 12px; line-height: 15px; color: #676767">Напомним при следующем открытии чата</span>
+        </button>
+        <button type="button" class="cell" onClick="{{offPromo}}" style="display: flex; flex-direction: column; gap: 2px; padding: 10px 8px; border-radius: 10px">
+          <span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Больше не&nbsp;предлагать</span>
+          <span style="font-size: 12px; line-height: 15px; color: #676767">Останется прежний общий чат</span>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Предложение перейти на чаты по темам: открывается поверх чата по клику на плашку под табами -->
+  <sc-if value="{{offer}}" hint-placeholder-val="{{ false }}">
+    <div class="anim" role="dialog" aria-modal="true" aria-label="Чаты по темам" style="position: absolute; inset: 0; z-index: 7; background: #FFFFFF; display: flex; flex-direction: column">
+      <div style="flex: none; height: 56px; box-sizing: border-box; padding: 12px 12px 0 20px; display: flex; align-items: flex-start; justify-content: flex-end">
+        <button type="button" class="ib" onClick="{{closeOffer}}" aria-label="Закрыть предложение">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path transform="translate(4 4)" d="M14.3 0.3C14.7 -0.1 15.3 -0.1 15.7 0.3C16.1 0.7 16.1 1.3 15.7 1.7L9.4 8L15.7 14.3C16.1 14.7 16.1 15.3 15.7 15.7C15.3 16.1 14.7 16.1 14.3 15.7L8 9.4L1.7 15.7C1.3 16.1 0.7 16.1 0.3 15.7C-0.1 15.3 -0.1 14.7 0.3 14.3L6.6 8L0.3 1.7C-0.1 1.3 -0.1 0.7 0.3 0.3C0.7 -0.1 1.3 -0.1 1.7 0.3L8 6.6L14.3 0.3Z" fill="#191919"></path></svg>
+        </button>
+      </div>
+      <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 0 20px; display: flex; flex-direction: column">
+        <!-- Иллюстрация: два окна чата со смещением — сзади с раскрытым меню тем, спереди со свёрнутым; в обоих есть шапка -->
+        <div aria-hidden="true" style="position: relative; height: {{illuH}}px; border-radius: 16px; background: #EFEDF8; overflow: hidden; flex: none">
+          <!-- На узком экране иллюстрация 400×232 масштабируется по ширине -->
+          <div style="position: absolute; left: 0; top: 0; width: 400px; height: 232px; transform: scale({{illuScale}}); transform-origin: 0 0">
+            <!-- Снизу слева: тот же чат, но меню тем раскрыто и лежит поверх чата (как в прототипе) -->
+            <div style="position: absolute; z-index: 1; left: 12px; top: 14px; width: 250px; height: 168px; border-radius: 12px; background: #FFFFFF; box-shadow: 0 8px 24px rgba(25,25,25,0.06); overflow: hidden; display: flex">
+              <div style="width: 40px; flex: none; background: #F9F9F9; display: flex; flex-direction: column; align-items: center; padding-top: 12px; gap: 6px; box-sizing: border-box">
+                <span style="width: 30px; height: 30px; border-radius: 8px; background: rgba(25,25,25,0.1); display: flex; align-items: center; justify-content: center"><span style="position: relative; width: 22px; height: 22px; border-radius: 7px; background: #A8A3F1; display: flex; align-items: center; justify-content: center; flex: none"><svg width="13" height="13" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(2 2.8)" d="M11.2 0C12.5 0 13.5 1 13.5 2.2L13.5 10.1C13.5 11.4 12.5 12.4 11.2 12.4L2.2 12.4C1 12.4 0 11.4 0 10.1L0 2.2C0 1 1 0 2.2 0L11.2 0ZM11.1 1.9C10.9 1.6 10.5 1.6 10.3 1.9L2.4 9.7C2.2 9.9 2.2 10.3 2.4 10.5C2.6 10.7 3 10.7 3.2 10.5L11.1 2.6C11.3 2.4 11.3 2.1 11.1 1.9ZM8.4 8.4C8.1 8.4 7.9 8.7 7.9 9C7.9 9.3 8.1 9.6 8.4 9.6L11.2 9.6C11.6 9.6 11.8 9.3 11.8 9C11.8 8.7 11.6 8.4 11.2 8.4L8.4 8.4ZM3.7 1.7C3.4 1.7 3.1 1.9 3.1 2.2L3.1 3.1L2.2 3.1C1.9 3.1 1.7 3.4 1.7 3.7C1.7 4 1.9 4.2 2.2 4.2L3.1 4.2L3.1 5.1C3.1 5.4 3.4 5.6 3.7 5.6C4 5.6 4.2 5.4 4.2 5.1L4.2 4.2L5.1 4.2C5.4 4.2 5.6 4 5.6 3.7C5.6 3.4 5.4 3.1 5.1 3.1L4.2 3.1L4.2 2.2C4.2 1.9 4 1.7 3.7 1.7Z" fill="#FFFFFF"></path></svg><span style="position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; border-radius: 50%; background: #835DE1; box-shadow: 0 0 0 1.5px #E6E6E6"></span></span></span>
+                <span style="position: relative; width: 22px; height: 22px; border-radius: 7px; background: #DE9C7E; display: flex; align-items: center; justify-content: center; flex: none"><svg width="13" height="13" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(1.5 1.5)" d="M12.8 0C14 0 15 1 15 2.2L15 11.2C15 12.5 14 13.5 12.8 13.5L5.3 13.5L1.1 15.9C0.6 16.1 0 15.8 0 15.2L0 2.2C0 1 1 0 2.2 0L12.8 0ZM6 7.5C5.6 7.5 5.2 7.8 5.2 8.2C5.2 8.7 5.6 9 6 9L9 9C9.4 9 9.8 8.7 9.8 8.2C9.8 7.8 9.4 7.5 9 7.5L6 7.5ZM6 4.5C5.6 4.5 5.2 4.8 5.2 5.2C5.2 5.7 5.6 6 6 6L10.5 6C10.9 6 11.2 5.7 11.2 5.2C11.2 4.8 10.9 4.5 10.5 4.5L6 4.5Z" fill="#FFFFFF"></path></svg></span>
+                <span style="width: 18px; height: 1px; background: rgba(25,25,25,0.2); margin: 2px 0"></span>
+                <span style="position: relative; width: 22px; height: 22px; border-radius: 7px; background: #AEAEAE; display: flex; align-items: center; justify-content: center; flex: none"><svg width="12" height="12" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(3.4 2.2)" d="M9 0C10.2 0 11.2 1 11.2 2.2L11.2 12.6C11.2 13.5 10.3 14.1 9.6 13.6L5.6 11.2L1.7 13.6C0.9 14.1 0 13.5 0 12.6L0 2.2C0 1 1 0 2.2 0L9 0Z" fill="#FFFFFF"></path></svg></span>
+              </div>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+              <div style="flex: none; padding: 9px 10px 6px 12px; display: flex; flex-direction: column; gap: 6px">
+                <div style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 8px; line-height: 10px; font-weight: 600; color: #191919; white-space: nowrap">Смолин А.О., ИП</span><svg width="9" height="9" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="#191919" stroke-width="2" stroke-linecap="round"></path></svg></div>
+                <div style="display: flex; gap: 4px; overflow: hidden"><span style="flex: none; height: 14px; padding: 0 5px; border-radius: 4px; box-shadow: inset 0 0 0 0.75px rgba(25,25,25,0.25); display: flex; align-items: center; white-space: nowrap; font-size: 7px; line-height: 9px; font-weight: 600; color: #191919; letter-spacing: 0">Поддержка</span><span style="flex: none; height: 14px; padding: 0 5px; border-radius: 4px; background: rgba(25,25,25,0.05); display: flex; align-items: center; white-space: nowrap; font-size: 7px; line-height: 9px; font-weight: 500; color: #191919; letter-spacing: 0">ИИ-Ассистент</span></div>
+              </div>
+                <div style="flex: 1; min-width: 0; padding: 4px 10px 0 8px; display: flex; flex-direction: column; gap: 6px">
+                  <div style="align-self: flex-start; width: 118px; border-radius: 7px; background: rgba(25,25,25,0.05); padding: 6px 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+                    <span style="display: flex; align-items: center; gap: 4px"><img src="./assets/avatar-karina.png" alt="" style="width: 11px; height: 11px; border-radius: 50%; object-fit: cover"><span style="width: 30px; height: 4px; border-radius: 2px; background: #949494"></span></span>
+                    <span style="width: 100px; height: 4px; border-radius: 2px; background: #C8C8C8"></span><span style="width: 74px; height: 4px; border-radius: 2px; background: #C8C8C8"></span>
+                  </div>
+                  <div style="align-self: flex-end; width: 88px; border-radius: 7px; background: #EFEDF8; padding: 6px 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px"><span style="width: 74px; height: 4px; border-radius: 2px; background: #C9BDF0"></span><span style="width: 46px; height: 4px; border-radius: 2px; background: #C9BDF0"></span></div>
+                  <div style="align-self: flex-start; width: 96px; border-radius: 7px; background: rgba(25,25,25,0.05); padding: 6px 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px"><span style="width: 80px; height: 4px; border-radius: 2px; background: #C8C8C8"></span></div>
+                </div>
+              </div>
+              <!-- Раскрытое меню перекрывает свёрнутую панель и левую часть чата вместе с шапкой -->
+              <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 148px; z-index: 1; background: #F9F9F9; box-shadow: 6px 0 16px rgba(25,25,25,0.12); padding: 8px 6px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 5px">
+                <span style="display: flex; justify-content: flex-end; padding-right: 4px; margin-bottom: 10px"><svg width="10" height="10" viewBox="0 0 16 16" aria-hidden="true"><path d="M8.5 3.5L4 8l4.5 4.5M13 3.5L8.5 8l4.5 4.5" fill="none" stroke="#191919" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                <span style="height: 24px; border-radius: 6px; padding: 0 8px 0 4px; display: flex; align-items: center; gap: 6px; overflow: hidden; background: rgba(25,25,25,0.1)"><span style="position: relative; width: 18px; height: 18px; border-radius: 6px; background: #A8A3F1; display: flex; align-items: center; justify-content: center; flex: none"><svg width="11" height="11" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(2 2.8)" d="M11.2 0C12.5 0 13.5 1 13.5 2.2L13.5 10.1C13.5 11.4 12.5 12.4 11.2 12.4L2.2 12.4C1 12.4 0 11.4 0 10.1L0 2.2C0 1 1 0 2.2 0L11.2 0ZM11.1 1.9C10.9 1.6 10.5 1.6 10.3 1.9L2.4 9.7C2.2 9.9 2.2 10.3 2.4 10.5C2.6 10.7 3 10.7 3.2 10.5L11.1 2.6C11.3 2.4 11.3 2.1 11.1 1.9ZM8.4 8.4C8.1 8.4 7.9 8.7 7.9 9C7.9 9.3 8.1 9.6 8.4 9.6L11.2 9.6C11.6 9.6 11.8 9.3 11.8 9C11.8 8.7 11.6 8.4 11.2 8.4L8.4 8.4ZM3.7 1.7C3.4 1.7 3.1 1.9 3.1 2.2L3.1 3.1L2.2 3.1C1.9 3.1 1.7 3.4 1.7 3.7C1.7 4 1.9 4.2 2.2 4.2L3.1 4.2L3.1 5.1C3.1 5.4 3.4 5.6 3.7 5.6C4 5.6 4.2 5.4 4.2 5.1L4.2 4.2L5.1 4.2C5.4 4.2 5.6 4 5.6 3.7C5.6 3.4 5.4 3.1 5.1 3.1L4.2 3.1L4.2 2.2C4.2 1.9 4 1.7 3.7 1.7Z" fill="#FFFFFF"></path></svg><span style="position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; border-radius: 50%; background: #835DE1; box-shadow: 0 0 0 1.5px #E6E6E6"></span></span><span style="font-size: 7.5px; line-height: 10px; font-weight: 500; color: #191919; white-space: nowrap; letter-spacing: 0">Персональный бухгалтер</span></span>
+                <span style="height: 24px; border-radius: 6px; padding: 0 8px 0 4px; display: flex; align-items: center; gap: 6px; overflow: hidden; background: transparent"><span style="position: relative; width: 18px; height: 18px; border-radius: 6px; background: #DE9C7E; display: flex; align-items: center; justify-content: center; flex: none"><svg width="11" height="11" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(1.5 1.5)" d="M12.8 0C14 0 15 1 15 2.2L15 11.2C15 12.5 14 13.5 12.8 13.5L5.3 13.5L1.1 15.9C0.6 16.1 0 15.8 0 15.2L0 2.2C0 1 1 0 2.2 0L12.8 0ZM6 7.5C5.6 7.5 5.2 7.8 5.2 8.2C5.2 8.7 5.6 9 6 9L9 9C9.4 9 9.8 8.7 9.8 8.2C9.8 7.8 9.4 7.5 9 7.5L6 7.5ZM6 4.5C5.6 4.5 5.2 4.8 5.2 5.2C5.2 5.7 5.6 6 6 6L10.5 6C10.9 6 11.2 5.7 11.2 5.2C11.2 4.8 10.9 4.5 10.5 4.5L6 4.5Z" fill="#FFFFFF"></path></svg></span><span style="font-size: 7.5px; line-height: 10px; font-weight: 500; color: #191919; white-space: nowrap; letter-spacing: 0">Общий чат</span></span>
+                <span style="height: 1px; background: rgba(25,25,25,0.2); margin: 5px 6px"></span>
+                <span style="height: 24px; border-radius: 6px; padding: 0 8px 0 4px; display: flex; align-items: center; gap: 6px; overflow: hidden; background: transparent"><span style="position: relative; width: 18px; height: 18px; border-radius: 6px; background: #AEAEAE; display: flex; align-items: center; justify-content: center; flex: none"><svg width="10" height="10" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(3.4 2.2)" d="M9 0C10.2 0 11.2 1 11.2 2.2L11.2 12.6C11.2 13.5 10.3 14.1 9.6 13.6L5.6 11.2L1.7 13.6C0.9 14.1 0 13.5 0 12.6L0 2.2C0 1 1 0 2.2 0L9 0Z" fill="#FFFFFF"></path></svg></span><span style="font-size: 7.5px; line-height: 10px; font-weight: 500; color: #191919; white-space: nowrap; letter-spacing: 0">Сохранённые сообщения</span></span>
+              </div>
+            </div>
+            <!-- Поверх справа, чуть ниже: тот же чат со свёрнутым меню перекрывает окно слева -->
+            <div style="position: absolute; z-index: 2; left: 160px; top: 56px; width: 230px; height: 168px; border-radius: 12px; background: #FFFFFF; box-shadow: 0 12px 32px rgba(25,25,25,0.14); overflow: hidden; display: flex">
+              <div style="width: 40px; flex: none; background: #F9F9F9; display: flex; flex-direction: column; align-items: center; padding-top: 12px; gap: 6px; box-sizing: border-box">
+                <span style="width: 30px; height: 30px; border-radius: 8px; background: rgba(25,25,25,0.1); display: flex; align-items: center; justify-content: center"><span style="position: relative; width: 22px; height: 22px; border-radius: 7px; background: #A8A3F1; display: flex; align-items: center; justify-content: center; flex: none"><svg width="13" height="13" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(2 2.8)" d="M11.2 0C12.5 0 13.5 1 13.5 2.2L13.5 10.1C13.5 11.4 12.5 12.4 11.2 12.4L2.2 12.4C1 12.4 0 11.4 0 10.1L0 2.2C0 1 1 0 2.2 0L11.2 0ZM11.1 1.9C10.9 1.6 10.5 1.6 10.3 1.9L2.4 9.7C2.2 9.9 2.2 10.3 2.4 10.5C2.6 10.7 3 10.7 3.2 10.5L11.1 2.6C11.3 2.4 11.3 2.1 11.1 1.9ZM8.4 8.4C8.1 8.4 7.9 8.7 7.9 9C7.9 9.3 8.1 9.6 8.4 9.6L11.2 9.6C11.6 9.6 11.8 9.3 11.8 9C11.8 8.7 11.6 8.4 11.2 8.4L8.4 8.4ZM3.7 1.7C3.4 1.7 3.1 1.9 3.1 2.2L3.1 3.1L2.2 3.1C1.9 3.1 1.7 3.4 1.7 3.7C1.7 4 1.9 4.2 2.2 4.2L3.1 4.2L3.1 5.1C3.1 5.4 3.4 5.6 3.7 5.6C4 5.6 4.2 5.4 4.2 5.1L4.2 4.2L5.1 4.2C5.4 4.2 5.6 4 5.6 3.7C5.6 3.4 5.4 3.1 5.1 3.1L4.2 3.1L4.2 2.2C4.2 1.9 4 1.7 3.7 1.7Z" fill="#FFFFFF"></path></svg><span style="position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; border-radius: 50%; background: #835DE1; box-shadow: 0 0 0 1.5px #E6E6E6"></span></span></span>
+                <span style="position: relative; width: 22px; height: 22px; border-radius: 7px; background: #DE9C7E; display: flex; align-items: center; justify-content: center; flex: none"><svg width="13" height="13" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(1.5 1.5)" d="M12.8 0C14 0 15 1 15 2.2L15 11.2C15 12.5 14 13.5 12.8 13.5L5.3 13.5L1.1 15.9C0.6 16.1 0 15.8 0 15.2L0 2.2C0 1 1 0 2.2 0L12.8 0ZM6 7.5C5.6 7.5 5.2 7.8 5.2 8.2C5.2 8.7 5.6 9 6 9L9 9C9.4 9 9.8 8.7 9.8 8.2C9.8 7.8 9.4 7.5 9 7.5L6 7.5ZM6 4.5C5.6 4.5 5.2 4.8 5.2 5.2C5.2 5.7 5.6 6 6 6L10.5 6C10.9 6 11.2 5.7 11.2 5.2C11.2 4.8 10.9 4.5 10.5 4.5L6 4.5Z" fill="#FFFFFF"></path></svg></span>
+                <span style="width: 18px; height: 1px; background: rgba(25,25,25,0.2); margin: 2px 0"></span>
+                <span style="position: relative; width: 22px; height: 22px; border-radius: 7px; background: #AEAEAE; display: flex; align-items: center; justify-content: center; flex: none"><svg width="12" height="12" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(3.4 2.2)" d="M9 0C10.2 0 11.2 1 11.2 2.2L11.2 12.6C11.2 13.5 10.3 14.1 9.6 13.6L5.6 11.2L1.7 13.6C0.9 14.1 0 13.5 0 12.6L0 2.2C0 1 1 0 2.2 0L9 0Z" fill="#FFFFFF"></path></svg></span>
+              </div>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+              <div style="flex: none; padding: 9px 10px 6px 12px; display: flex; flex-direction: column; gap: 6px">
+                <div style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 8px; line-height: 10px; font-weight: 600; color: #191919; white-space: nowrap">Смолин А.О., ИП</span><svg width="9" height="9" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="#191919" stroke-width="2" stroke-linecap="round"></path></svg></div>
+                <div style="display: flex; gap: 4px; overflow: hidden"><span style="flex: none; height: 14px; padding: 0 5px; border-radius: 4px; box-shadow: inset 0 0 0 0.75px rgba(25,25,25,0.25); display: flex; align-items: center; white-space: nowrap; font-size: 7px; line-height: 9px; font-weight: 600; color: #191919; letter-spacing: 0">Поддержка</span><span style="flex: none; height: 14px; padding: 0 5px; border-radius: 4px; background: rgba(25,25,25,0.05); display: flex; align-items: center; white-space: nowrap; font-size: 7px; line-height: 9px; font-weight: 500; color: #191919; letter-spacing: 0">ИИ-Ассистент</span></div>
+              </div>
+                <div style="flex: 1; min-width: 0; padding: 4px 10px 0 8px; display: flex; flex-direction: column; gap: 6px">
+                  <div style="align-self: flex-start; width: 118px; border-radius: 7px; background: rgba(25,25,25,0.05); padding: 6px 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+                    <span style="display: flex; align-items: center; gap: 4px"><img src="./assets/avatar-karina.png" alt="" style="width: 11px; height: 11px; border-radius: 50%; object-fit: cover"><span style="width: 30px; height: 4px; border-radius: 2px; background: #949494"></span></span>
+                    <span style="width: 100px; height: 4px; border-radius: 2px; background: #C8C8C8"></span><span style="width: 74px; height: 4px; border-radius: 2px; background: #C8C8C8"></span>
+                  </div>
+                  <div style="align-self: flex-end; width: 88px; border-radius: 7px; background: #EFEDF8; padding: 6px 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px"><span style="width: 74px; height: 4px; border-radius: 2px; background: #C9BDF0"></span><span style="width: 46px; height: 4px; border-radius: 2px; background: #C9BDF0"></span></div>
+                  <div style="align-self: flex-start; width: 96px; border-radius: 7px; background: rgba(25,25,25,0.05); padding: 6px 7px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px"><span style="width: 80px; height: 4px; border-radius: 2px; background: #C8C8C8"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 24px; font-size: 22px; line-height: 28px; font-weight: 600; color: #191919">Решение вопроса может стать проще&nbsp;— в&nbsp;отдельном&nbsp;чате</div>
+        <div style="margin-top: 8px; font-size: 14px; line-height: 18px; color: #676767">Разделим переписку на&nbsp;две темы. Вопросы не&nbsp;будут теряться в&nbsp;общей ленте, а&nbsp;отвечать будет нужный специалист.</div>
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; align-items: flex-start; gap: 12px">
+            <span style="width: 32px; height: 32px; margin-top: 4px; border-radius: 10px; background: #A8A3F1; display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(2 2.8)" d="M11.2 0C12.5 0 13.5 1 13.5 2.2L13.5 10.1C13.5 11.4 12.5 12.4 11.2 12.4L2.2 12.4C1 12.4 0 11.4 0 10.1L0 2.2C0 1 1 0 2.2 0L11.2 0ZM11.1 1.9C10.9 1.6 10.5 1.6 10.3 1.9L2.4 9.7C2.2 9.9 2.2 10.3 2.4 10.5C2.6 10.7 3 10.7 3.2 10.5L11.1 2.6C11.3 2.4 11.3 2.1 11.1 1.9ZM8.4 8.4C8.1 8.4 7.9 8.7 7.9 9C7.9 9.3 8.1 9.6 8.4 9.6L11.2 9.6C11.6 9.6 11.8 9.3 11.8 9C11.8 8.7 11.6 8.4 11.2 8.4L8.4 8.4ZM3.7 1.7C3.4 1.7 3.1 1.9 3.1 2.2L3.1 3.1L2.2 3.1C1.9 3.1 1.7 3.4 1.7 3.7C1.7 4 1.9 4.2 2.2 4.2L3.1 4.2L3.1 5.1C3.1 5.4 3.4 5.6 3.7 5.6C4 5.6 4.2 5.4 4.2 5.1L4.2 4.2L5.1 4.2C5.4 4.2 5.6 4 5.6 3.7C5.6 3.4 5.4 3.1 5.1 3.1L4.2 3.1L4.2 2.2C4.2 1.9 4 1.7 3.7 1.7Z" fill="#FFFFFF"></path></svg></span>
+            <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Персональный бухгалтер</span><span style="font-size: 14px; line-height: 18px; color: #676767">Налоги и&nbsp;взносы, отчётность, требования&nbsp;— с&nbsp;вашим бухгалтером</span></span>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px">
+            <span style="width: 32px; height: 32px; margin-top: 4px; border-radius: 10px; background: #DE9C7E; display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path transform="translate(1.5 1.5)" d="M12.8 0C14 0 15 1 15 2.2L15 11.2C15 12.5 14 13.5 12.8 13.5L5.3 13.5L1.1 15.9C0.6 16.1 0 15.8 0 15.2L0 2.2C0 1 1 0 2.2 0L12.8 0ZM6 7.5C5.6 7.5 5.2 7.8 5.2 8.2C5.2 8.7 5.6 9 6 9L9 9C9.4 9 9.8 8.7 9.8 8.2C9.8 7.8 9.4 7.5 9 7.5L6 7.5ZM6 4.5C5.6 4.5 5.2 4.8 5.2 5.2C5.2 5.7 5.6 6 6 6L10.5 6C10.9 6 11.2 5.7 11.2 5.2C11.2 4.8 10.9 4.5 10.5 4.5L6 4.5Z" fill="#FFFFFF"></path></svg></span>
+            <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; line-height: 20px; font-weight: 500; color: #191919">Общий чат</span><span style="font-size: 14px; line-height: 18px; color: #676767">Другие вопросы и&nbsp;сообщения от&nbsp;банка. Здесь сохранится вся прежняя переписка</span></span>
+          </div>
+        </div>
+      </div>
+      <div style="flex: none; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 8px">
+        <button type="button" class="pri" onClick="{{goTopics}}" style="height: 48px; border-radius: 12px; color: #FFFFFF; font-size: 16px; line-height: 20px; font-weight: 600; text-align: center">Создать чаты по&nbsp;темам</button>
+        <button type="button" class="chip" onClick="{{stayOne}}" style="height: 48px; border-radius: 12px; color: #191919; font-size: 16px; line-height: 20px; font-weight: 500; text-align: center">Оставить один чат</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"replyDelay":{"editor":"range","default":2,"min":0.5,"max":6,"step":0.5,"unit":"с","section":"Сценарий"},"supportDelay":{"editor":"range","default":3,"min":1,"max":30,"step":0.5,"unit":"с","section":"Сценарий"},"showFailure":{"editor":"boolean","default":false,"section":"Сценарий"},"$preview":{"width":375,"height":812}}'>
+const ORGS = [
+  { name: 'Смолин А.О., ИП', kind: 'Индивидуальный предприниматель', initials: 'СА' },
+  { name: 'ООО «Смолин и партнёры»', kind: 'Общество с ограниченной ответственностью', initials: 'СП' },
+  { name: 'ООО «Северная логистика»', kind: 'Общество с ограниченной ответственностью', initials: 'СЛ' }
+];
+
+// Тексты из макетов
+const ACC_WELCOME = 'Александр, в этом чате я и моя команда поможем и решим все вопросы по бухгалтерии. Смело пишите, что вас интересует по этой теме';
+const CLIENT_1 = 'Да, это отлично! Как раз есть вопрос, что за требование пришло от налоговой? Всё ж оплачено и сдано?';
+const ACC_ANSWER_1 = 'Проверила, вы правы, налоги и взносы оплачены, а декларацию сдавать пока рано. В требовании налоговая просит сверить юр. адрес, ограничений на счёте нет, только для подтверждения адреса вам нужно подойти в ФНС по адресу Пр. Мира, д. 8 обязательно до 30 ноября 2026г.';
+const CLIENT_2 = 'А раз мы с вами тут, то можете посмотреть, мой платёж в Китай провели, документов достаточно было?';
+// Карина передаёт вопрос не по теме коллегам и по-дружески уточняет, остались ли вопросы по бухгалтерии
+const ACC_OFFTOPIC = 'Александр, с платежом в Китай лучше помогут коллеги из ВЭДа — я уже передала им ваш вопрос, они вам ответят.\n\nХотите обсудить что-то ещё по бухгалтерии или пока переключимся на ВЭД?';
+const CLIENT_3 = 'По бухгалтерии всё, спасибо! Давайте по ВЭДу';
+const ACC_BYE = 'Отлично, тогда передаю вас коллегам — ответ по платежу придёт в Общий чат.';
+const CLIENT_4 = 'Здравствуйте! Подскажите, пожалуйста, а курьер должен сегодня терминал привезти или завтра? Хочу предупредить сотрудников.';
+// Ответа ВЭД в макетах нет — текст для исследования
+const VED_ANSWER = 'Здравствуйте, Александр! Отвечаю на ваш вопрос про платёж в Китай: он проведён, документов достаточно. Деньги поступят контрагенту в течение 1–2 рабочих дней.';
+// Вопрос про доставку терминала — отвечает специалист по платёжным решениям
+const TURKEY_ANSWER = 'Здравствуйте, Александр! Проверила: да, курьер привезёт терминал сегодня, с 14:00 до 15:00 по Москве.';
+const SUP_THANKS = 'Спасибо!';
+// Режим одного общего чата: прежний сценарий, все ответы приходят в одну ленту
+const ONE_1 = 'Здравствуйте! Что за требование пришло от налоговой? Всё ж оплачено и сдано?';
+const ONE_2 = 'И ещё: мой платёж в Китай провели, документов достаточно было?';
+const ONE_PASS = 'По платежу в Китай подскажут коллеги из ВЭДа — я передала им ваш вопрос, ответ придёт сюда.';
+// Автосообщение банка в «Общий чат»
+const DEPOSIT_TEXT = 'Депозит закрыт, деньги перечислены на ваш счёт. Справка о закрытии депозита — в следующем сообщении.';
+
+const SCRIPTS = { one: [ONE_1, ONE_2], acc: [CLIENT_1, CLIENT_2, CLIENT_3], sup: [CLIENT_4, SUP_THANKS], saved: [] };
+
+function hm() { const d = new Date(); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+function today() { return new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }); }
+const AI_CONV = [
+  { sec: 'Важные' },
+  { t: 'Отчёт по командировочным расходам', badge: true },
+  { t: 'Расчет 6 НДФЛ в ЗУПе', badge: true },
+  { t: 'НДС с авансом при УСН, платящим НДС 5%' },
+  { sec: 'Сегодня' },
+  { t: 'Документы лизингополучателя автомобиля' },
+  { t: 'ООО на УСН продает ОС,  начисление НДС на реализацию' },
+  { sec: 'Вчера' },
+  { t: 'Налоговая реформа 2026' },
+  { t: 'Федеральный закон о мобилизации' },
+  { t: 'Значение ставки рефинансирования и ключевой ставки' },
+  { t: 'Постановление Федерации Независимых Профсоюзов России' },
+  { t: 'НДС на обеспечительный платёж аренды помещения' },
+  { t: 'НДФЛ при выплате дивидендов' }
+];
+let uid = 0;
+function mk(o) { uid += 1; return Object.assign({ id: 'm' + uid }, o); }
+
+class Component extends DCLogic {
+  state = {
+    // В мобильной версии чат открыт на весь экран
+    open: true,
+    // Прототип стартует с главного экрана приложения; «Чат» в нижнем меню открывает чат
+    app: 'main',
+    org: 0,
+    orgOpen: false,
+    railOpen: false,
+    aiSel: -1,
+    // Сначала клиент в прежнем режиме одного общего чата; по темам — только если сам выберет
+    mode: 'single',
+    offer: false,
+    screen: 'chat',
+    tab: 'chats',
+    chatId: 'sup',
+    draft: '',
+    typing: false,
+    step: { one: 0, acc: 0, sup: 0, saved: 0 },
+    transferred: false,
+    chats: {
+      acc: { title: 'Персональный бухгалтер', unread: 1, waiting: false, pending: false,
+        items: [mk({ k: 'date', text: today() }), mk({ k: 'in', author: 'Карина', who: 'karina', text: ACC_WELCOME, time: hm() })] },
+      sup: { title: 'Общий чат', unread: 0, waiting: false, pending: false,
+        items: [
+          mk({ k: 'date', text: '16 сентября' }),
+          mk({ k: 'out', text: 'Привет! Подскажите, как понять, ушёл ли мой платёж от 13 сентября?', time: '09:15' }),
+          mk({ k: 'out', text: 'И когда он придёт к контрагенту?', time: '09:16' }),
+          mk({ k: 'in', author: 'Карина', who: 'karina', text: 'Здравствуйте!\nС платежом всё в порядке — деньги уже поступили в банк вашего контрагента, следующим сообщением отправлю вам платёжку.', time: '09:17' }),
+          mk({ k: 'file', author: 'Карина', who: 'karina', fileName: 'Платёж №7 от 16 сентября', fileMeta: 'PDF, 230 КБ', time: '09:17' }),
+          mk({ k: 'out', text: 'Огонь! Спасибо!', time: '09:18' }),
+          mk({ k: 'date', text: '5 ноября' }),
+          mk({ k: 'in', author: 'Точка Банк', who: 'bank', text: 'Здравствуйте!\nСегодня ночью закроется виртуальная карта *0000.', link: { pre: 'Для перевыпуска ', label: 'перейдите по ссылке', post: '.' }, time: '09:17' })
+        ] },
+      saved: { title: 'Сохранённые сообщения', unread: 0, waiting: false, pending: false,
+        items: [
+          mk({ k: 'date', text: '16 сентября' }),
+          mk({ k: 'file', author: 'Карина', who: 'karina', fileName: 'Платёж №7 от 16 сентября', fileMeta: 'PDF, 230 КБ', time: '09:17' }),
+          mk({ k: 'date', text: '3 октября' }),
+          mk({ k: 'in', author: 'Карина', who: 'karina', text: 'Реквизиты для уплаты налога по УСН:\nКБК 182 1 05 01011 01 1000 110\nПолучатель — Казначейство России (ФНС России)', time: '11:42' }),
+          mk({ k: 'in', author: 'Карина', who: 'karina', text: 'Напоминаю: декларацию по УСН за 2026 год нужно сдать до 25 марта 2027 года, а налог уплатить до 28 апреля.', time: '11:44' }),
+          mk({ k: 'date', text: '29 октября' }),
+          mk({ k: 'out', text: 'Сохраню, чтобы не потерять: юр. адрес подтвердить в ФНС по адресу Пр. Мира, д. 8 до 30 ноября 2026г.', time: '18:05' })
+        ] }
+    }
+  };
+
+  timers = [];
+  // Макет 1440×900 масштабируется под размер окна с сохранением пропорций
+  // Ширина экрана нужна, чтобы масштабировать иллюстрацию на экране предложения
+  componentDidMount() { this.onResize = () => this.setState({ vw: window.innerWidth || 375 }); window.addEventListener('resize', this.onResize); this.onResize(); }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); if (this.tick) clearInterval(this.tick); if (this.noteTimer) clearTimeout(this.noteTimer); window.removeEventListener('resize', this.onResize); }
+
+  // Ссылка «Ответим в чате «Поддержка»» подсвечивается один раз — когда клиент впервые видит её в открытом чате.
+  // Появилась в фоне — подсветится при возврате; уже увиденная больше не мигает.
+  componentDidUpdate() { this.checkNotes(); }
+  viewingAcc(s) { return s.open && s.screen === 'chat' && s.chatId === 'acc'; }
+  checkNotes() {
+    const s = this.state;
+    if (!this.viewingAcc(s)) { if (this.noteTimer) { clearTimeout(this.noteTimer); this.noteTimer = null; } return; }
+    if (this.noteTimer || !s.chats.acc.items.some((m) => m.note && !m.noteSeen)) return;
+    this.noteTimer = setTimeout(() => {
+      this.noteTimer = null;
+      if (!this.viewingAcc(this.state)) return;
+      this.patchChat('acc', (c) => { c.items = c.items.map((m) => (m.note && !m.noteSeen ? Object.assign({}, m, { noteSeen: true }) : m)); return c; });
+    }, 1700);
+  }
+  later(fn, ms) { this.timers.push(setTimeout(fn, ms)); }
+  delay() { return Math.max(0.3, Number(this.props.replyDelay ?? 2)) * 1000; }
+  supDelay() { return Math.max(1, Number(this.props.supportDelay ?? 3)) * 1000; }
+
+  patchChat(id, fn) {
+    this.setState((s) => {
+      const chats = Object.assign({}, s.chats);
+      chats[id] = fn(Object.assign({}, chats[id], { items: chats[id].items.slice() }), s);
+      return { chats };
+    });
+  }
+
+  receive(id, msgs, extra) {
+    this.patchChat(id, (c, s) => {
+      c.items.push(...msgs.map(mk));
+      const viewing = s.open && s.screen === 'chat' && s.chatId === id;
+      if (!viewing) { const add = msgs.filter((m) => m.k !== 'chips').length; if (add && c.unread === 0) c.unreadAt = Date.now(); c.unread += add; }
+      return Object.assign(c, { pending: false }, extra || {});
+    });
+  }
+
+  openChat(id) {
+    this.stopTyping();
+    this.setState((s) => {
+      const chats = Object.assign({}, s.chats);
+      chats[id] = Object.assign({}, chats[id], { unread: 0 });
+      // Выбор темы сворачивает меню; повторно по наведению оно раскроется только после того, как курсор уйдёт с панели
+      return { screen: 'chat', chatId: id, chats, draft: '', orgOpen: false, railOpen: false, railHold: s.railOpen || s.railHold };
+    });
+  }
+
+  stopTyping() { if (this.tick) { clearInterval(this.tick); this.tick = null; } if (this.state.typing) this.setState({ typing: false }); }
+
+  // В режиме одного чата лента «Общего чата» ведёт свой сценарий
+  // Ответ про Китай уже пришёл в «Общий чат», а клиент ещё не поблагодарил
+  // Под ответом Андрея про Китай клиент может поблагодарить — Андрей ответит «Рад был помочь!»
+  chinaThanksDue(s) { return s.mode === 'topics' && s.chatId === 'sup' && !!this.thanksDue; }
+
+  scriptKey(s) { return s.mode === 'single' && s.chatId === 'sup' ? 'one' : s.chatId; }
+  // Реплики клиента в чатах по темам идут по кругу, чтобы сценарий можно было повторять
+  line(key, s) {
+    const list = SCRIPTS[key] || [];
+    const i = s.step[key] || 0;
+    return key === 'acc' || key === 'sup' ? list[i % list.length] : list[i];
+  }
+
+  // Активна только одна тема — та, где специалист сейчас ведёт диалог.
+  // Специалист сначала «подключается» (фиолетовая точка, «Активный диалог»), потом приходит его ответ
+  answer(id, msgs, actAt, ansAt, after) {
+    this.later(() => this.setState({ active: id }), actAt);
+    this.later(() => {
+      this.ensureDate(id);
+      this.receive(id, msgs.map((m) => Object.assign({ time: hm() }, m)));
+      if (after) after();
+    }, ansAt);
+  }
+
+  // Автосообщение банка в «Общий чат»: на аватаре появляется счётчик непрочитанных
+  depositLater() {
+    if (this.depositSent) return;
+    this.depositSent = true;
+    this.later(() => {
+      this.ensureDate('sup');
+      this.receive('sup', [
+        { k: 'in', author: 'Точка Банк', who: 'bank', text: DEPOSIT_TEXT, time: hm() },
+        { k: 'file', author: 'Точка Банк', who: 'bank', fileName: 'Справка о закрытии депозита', fileMeta: 'PDF, 118 КБ', time: hm() }
+      ]);
+    }, 3000);
+  }
+
+  // Клик по полю ввода: «печатаем» следующую реплику клиента из сценария
+  fillScript() {
+    const s = this.state;
+    if (this.tick || s.typing || s.draft) return;
+    const key = this.scriptKey(s);
+    const line = this.chinaThanksDue(s) ? SUP_THANKS : this.line(key, s);
+    if (!line) return;
+    let i = 0;
+    this.setState({ typing: true });
+    this.tick = setInterval(() => {
+      i = Math.min(line.length, i + 3);
+      this.setState({ draft: line.slice(0, i) });
+      if (i >= line.length) { clearInterval(this.tick); this.tick = null; this.setState({ typing: false }); }
+    }, 18);
+  }
+
+  // Разделитель «сегодня» перед новыми сообщениями, если его ещё нет
+  ensureDate(id) {
+    this.patchChat(id, (c) => {
+      const last = c.items.slice().reverse().find((m) => m.k === 'date');
+      if (!last || last.text !== today()) c.items.push(mk({ k: 'date', text: today() }));
+      return c;
+    });
+  }
+
+  send(textArg) {
+    const text = (typeof textArg === 'string' ? textArg : this.state.draft).trim();
+    if (!text || this.state.typing) return;
+    const id = this.state.chatId;
+    const key = this.scriptKey(this.state);
+    const out = mk({ k: 'out', text, time: hm() });
+    const step = this.state.step[key] || 0;
+    const thanksChina = text === SUP_THANKS && this.chinaThanksDue(this.state);
+    const scripted = !thanksChina && this.line(key, this.state) === text;
+    this.setState((s) => ({ draft: '', step: Object.assign({}, s.step, { [key]: scripted ? step + 1 : step }) }));
+    this.ensureDate(id);
+    this.patchChat(id, (c) => { c.items.push(out); return c; });
+    if (thanksChina) {
+      this.thanksDue = false;
+      this.later(() => this.receive('sup', [{ k: 'in', author: 'Андрей, ВЭД', who: 'andrey', text: 'Рад был помочь!', time: hm() }]), this.delay());
+      return;
+    }
+    if (!scripted) return;
+    const d = this.delay();
+    const karina = (t) => ({ k: 'in', author: 'Карина', who: 'karina', text: t });
+
+    // Прежний режим одного чата: всё в одной ленте
+    if (key === 'one') {
+      if (text === ONE_1) this.later(() => this.receive('sup', [Object.assign({ time: hm() }, karina(ACC_ANSWER_1))]), d);
+      if (text === ONE_2) {
+        this.later(() => this.receive('sup', [Object.assign({ time: hm() }, karina(ONE_PASS))]), d);
+        this.later(() => this.receive('sup', [{ k: 'in', author: 'Андрей, ВЭД', who: 'andrey', text: VED_ANSWER, time: hm(), reply: text, replyTo: out.id }]), d + this.supDelay());
+      }
+      return;
+    }
+
+    // Персональный бухгалтер: через 1 с тема становится активной, ещё через 1,5 с отвечает Карина
+    if (id === 'acc') {
+      if (text === CLIENT_1) this.answer('acc', [karina(ACC_ANSWER_1)], 1000, 2500, () => this.depositLater());
+      if (text === CLIENT_2) {
+        // Вопрос не по теме — про платёж в Китай: Карина передаёт его в ВЭД
+        this.china = { id: out.id, text };
+        this.answer('acc', [karina(ACC_OFFTOPIC)], 1000, 2500);
+      }
+      if (text === CLIENT_3) {
+        const ch = this.china;
+        this.answer('acc', [karina(ACC_BYE)], 1000, 2500, () => {
+          // После прощания Карины в «Общий чат» отвечает Андрей про Китай — теперь активен «Общий чат»
+          if (!ch) return;
+          this.china = null;
+          this.answer('sup', [{ k: 'in', author: 'Андрей, ВЭД', who: 'andrey', text: VED_ANSWER, reply: ch.text, replyTo: ch.id, replyChat: 'acc' }], 2000, 3000, () => { this.thanksDue = true; });
+        });
+      }
+      return;
+    }
+
+    // Общий чат: через 2 с тема становится активной, ещё через 1 с отвечает Ольга
+    if (id === 'sup' && text === CLIENT_4) {
+      this.answer('sup', [{ k: 'in', author: 'Ольга', role: 'Платёжные решения', who: 'olga', text: TURKEY_ANSWER }], 2000, 3000);
+    }
+  }
+
+  // Клик по цитате: плавно прокручиваем ленту к исходному сообщению и подсвечиваем его
+  jumpTo(id) {
+    if (!id) return;
+    const el = document.getElementById('msg-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    this.setState({ flashId: null });
+    this.later(() => this.setState({ flashId: id }), 350);
+    this.later(() => { if (this.state.flashId === id) this.setState({ flashId: null }); }, 2600);
+  }
+
+  // Цитата ведёт к исходному сообщению; если оно в другом чате — сначала открываем тот чат
+  goReply(m) {
+    if (m.replyChat && m.replyChat !== this.state.chatId) { this.openChat(m.replyChat); this.later(() => this.jumpTo(m.replyTo), 120); return; }
+    this.jumpTo(m.replyTo);
+  }
+
+  view(items) {
+    let prevSide = null;
+    return items.map((m, i) => {
+      const side = m.k === 'date' ? 'date' : (m.k === 'chips' ? 'chips' : (m.k === 'out' ? 'out' : 'in'));
+      const first = i === 0 || prevSide === 'date';
+      const same = !first && prevSide === side && side !== 'chips' && !(side === 'in' && items[i - 1] && items[i - 1].who !== m.who);
+      const v = {
+        id: m.id, text: m.text || '', time: m.time || '',
+        isDate: side === 'date', isIn: side === 'in', isOut: side === 'out',
+        isText: m.k === 'in', isFile: m.k === 'file',
+        fileName: m.fileName || '', fileMeta: m.fileMeta || '',
+        author: m.author || '', isKarina: m.who === 'karina', isAndrey: m.who === 'andrey', isBank: m.who === 'bank', isExpert: m.who === 'expert', isOlga: m.who === 'olga',
+        // У Карины под именем всегда видна её роль
+        role: m.role || (m.who === 'karina' ? 'Бухгалтер' : ''), hasRole: !!(m.role || m.who === 'karina'),
+        isChips: m.k === 'chips', options: (m.options || []).map((o) => ({ label: o, pick: () => this.send(o) })),
+        hasLink: !!m.link, linkPre: m.link ? m.link.pre : '', linkLabel: m.link ? m.link.label : '', linkPost: m.link ? m.link.post : '',
+        showHeader: side === 'in' && !same,
+        transfer: m.transfer || '', hasTransfer: !!m.transfer,
+        reply: m.reply || '', hasReply: !!m.reply,
+        // Клик по цитате не уводит в другой чат — просто раскрывает и сворачивает текст сообщения клиента
+        goReply: () => this.setState((st) => ({ openQuotes: Object.assign({}, st.openQuotes, { [m.id]: !(st.openQuotes || {})[m.id] }) })),
+        replyOpen: !!(this.state.openQuotes || {})[m.id], replyShort: !(this.state.openQuotes || {})[m.id],
+        replyAria: (this.state.openQuotes || {})[m.id] ? 'Свернуть цитату' : 'Показать сообщение клиента целиком',
+        flashCls: this.state.flashId === m.id ? 'flash' : '',
+        note: m.note || '', hasNote: !!m.note,
+        goNote: () => this.openChat('sup'),
+        goTransfer: () => this.openChat(m.from || 'acc'),
+        noteCls: m.note && !m.noteSeen ? 'note-anim' : '',
+        gapS: side !== 'date' && same,
+        gapL: side !== 'date' && !same && !first
+      };
+      prevSide = side;
+      return v;
+    });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const c = s.chats;
+    const lastOut = (x) => { const m = x.items.slice().reverse().find((i) => i.k === 'in' || i.k === 'out' || i.k === 'file'); return !!m && m.k === 'out'; };
+    const card = (x) => { const w = !!x.waiting || lastOut(x); return { unread: x.unread, hasUnread: x.unread > 0, waiting: w, idle: !w }; };
+    const cur = c[s.chatId];
+    const topics = s.mode === 'topics';
+    // В режиме одного чата бесед по темам ещё нет — считаем только существующие
+    const keys = topics ? ['acc', 'sup', 'saved'] : ['sup', 'saved'];
+    const otherCount = keys.filter((k) => k !== s.chatId).reduce((n, k) => n + c[k].unread, 0);
+    const total = keys.reduce((n, k) => n + c[k].unread, 0);
+    const rows = Math.max(1, Math.min(5, Math.ceil((s.draft.length || 1) / 20)));
+    return {
+      scale: 1,
+      // Иллюстрация 400×232 вписывается в ширину экрана минус поля
+      // Экран фиксированный 375×812: иллюстрация 400×232 вписывается в ширину 335
+      illuScale: (375 - 40) / 400,
+      illuH: Math.round(232 * (375 - 40) / 400),
+      // Назад из чата по теме — к списку тем
+      goBack: () => { this.stopTyping(); this.setState({ screen: 'home', tab: 'chats', draft: '', orgOpen: false }); },
+      open: s.open,
+      closed: !s.open,
+      orgName: ORGS[s.org].name,
+      orgInitials: ORGS[s.org].initials,
+      onMain: s.app === 'main',
+      openApp: () => this.setState({ app: 'chat' }),
+      toMain: () => { this.stopTyping(); this.setState({ app: 'main', orgOpen: false, railOpen: false, promoAsk: false }); },
+      orgOpen: s.orgOpen,
+      orgMenu: s.orgOpen && s.open,
+      topicsMode: topics,
+      singleMode: !topics,
+      panelLeft: topics ? 880 : 960,
+      panelW: topics ? 520 : 440,
+      offer: s.offer && s.open,
+      showPromo: !topics && s.screen === 'chat' && s.chatId === 'sup' && !s.promoSnoozed && !s.promoOff,
+      promoAsk: !!s.promoAsk && s.open,
+      askPromo: () => this.setState({ promoAsk: !s.promoAsk, orgOpen: false }),
+      cancelPromo: () => this.setState({ promoAsk: false }),
+      // «Отложить» — плашка вернётся после закрытия чата крестиком; «Больше не предлагать» — скрываем насовсем
+      snoozePromo: () => this.setState({ promoAsk: false, promoSnoozed: true }),
+      offPromo: () => this.setState({ promoAsk: false, promoOff: true }),
+      openOffer: () => { this.stopTyping(); this.setState({ offer: true, orgOpen: false }); },
+      closeOffer: () => this.setState({ offer: false }),
+      // «Оставить один чат» — клиент сделал выбор: плашку с предложением больше не показываем
+      stayOne: () => this.setState({ offer: false, promoOff: true, promoAsk: false }),
+      // Переход в чаты по темам: создаём «Персональный бухгалтер» и «Общий чат» (в нём остаётся вся прежняя переписка)
+      goTopics: () => { this.stopTyping(); this.setState({ mode: 'topics', offer: false, screen: 'home', tab: 'chats', draft: '' }); },
+      savedOn: !topics && s.chatId === 'saved',
+      supTabStatic: !(!topics && s.chatId === 'saved'),
+      savedFill: !topics && s.chatId === 'saved' ? '#191919' : '#949494',
+      toggleSaved: () => this.openChat(s.chatId === 'saved' ? 'sup' : 'saved'),
+      backToSup: () => this.openChat('sup'),
+      railMenu: topics && s.railOpen && s.open && s.screen === 'chat',
+      aiRail: topics && s.open && s.screen === 'home' && s.tab === 'ai',
+      aiRailMenu: topics && s.railOpen && s.open && s.screen === 'home' && s.tab === 'ai',
+      aiUnread: AI_CONV.filter((c) => c.badge).length,
+      aiHasUnread: AI_CONV.some((c) => c.badge),
+      aiUnreadLabel: 'Непрочитанные беседы с ИИ-Ассистентом: ' + AI_CONV.filter((c) => c.badge).length,
+      aiConv: AI_CONV.map((c, i) => (c.sec ? { isSec: true, isItem: false, title: c.sec, line: i > 0 } : { isSec: false, isItem: true, title: c.t, short: c.t.split(' ')[0].replace(/,$/, ''), badge: !!c.badge, cls: s.aiSel === i ? 'sel' : '', pick: () => this.setState({ aiSel: i, railOpen: false }) })),
+      openRail: () => this.setState({ railOpen: true, orgOpen: false, railHold: false }),
+      hoverRail: () => { if (!this.state.railHold) this.setState({ railOpen: true, orgOpen: false }); },
+      leaveRail: () => { if (this.state.railHold) this.setState({ railHold: false }); },
+      closeRail: () => this.setState({ railOpen: false }),
+      rail: { accCls: s.chatId === 'acc' ? 'sel' : '', supCls: s.chatId === 'sup' ? 'sel' : '', savedCls: s.chatId === 'saved' ? 'sel' : '' },
+      chevronRot: s.orgOpen ? 'rotate(180deg)' : 'none',
+      orgs: ORGS.map((o, i) => Object.assign({}, o, { selected: i === s.org, pick: () => this.setState({ org: i, orgOpen: false }) })),
+      toggleOrg: () => this.setState({ orgOpen: !s.orgOpen }),
+      closeOrg: () => this.setState({ orgOpen: false }),
+      isHome: s.screen === 'home',
+      isChat: s.screen === 'chat',
+      tabChats: s.tab === 'chats',
+      tabAi: s.tab === 'ai',
+      acc: card(c.acc),
+      sup: Object.assign(card(c.sup), { waiting: !!c.sup.queued, idle: !c.sup.queued }),
+      totalUnread: total,
+      hasTotalUnread: total > 0,
+      otherUnread: otherCount > 0,
+      otherUnreadCount: otherCount,
+      chat: { title: cur.title, items: this.view(cur.items), pending: cur.pending, isEmpty: cur.items.length === 0 },
+      draft: s.draft,
+      rows,
+      hasDraft: s.draft.trim().length > 0 && !s.typing,
+      noDraft: !(s.draft.trim().length > 0 && !s.typing),
+      showFailure: !!this.props.showFailure,
+      showQueued: s.chatId === 'sup' && !!c.sup.queued,
+      // В зеркальном сценарии точка у бухгалтера загорается только когда Карина ответила
+      // Фиолетовая точка — у той темы, где сейчас активный диалог
+      accActive: topics && s.active === 'acc',
+      supActive: topics && s.active === 'sup',
+      // Статус в шапке чата по теме: имя специалиста, который сейчас на связи
+      chatOnline: topics && s.screen === 'chat' && s.active === s.chatId,
+      chatOnlineText: 'Активный диалог',
+      accDot: c.acc.items.some((m) => m.k === 'out') && c.acc.unread === 0,
+      supWait: !!c.sup.queued && s.chatId !== 'sup',
+      // Стек индикаторов на аватаре Общего чата: новый ложится поверх старого со сдвигом на половину
+      supStack: { waitFirst: false, waitSecond: false, badgeMl: 0 },
+      openAcc: () => this.openChat('acc'),
+      openSup: () => this.openChat('sup'),
+      openSaved: () => this.openChat('saved'),
+      goHome: () => { this.stopTyping(); this.setState({ screen: 'home', draft: '', railOpen: false, tab: 'chats' }); },
+      toAi: () => { this.stopTyping(); this.setState({ tab: 'ai', aiFrom: { screen: s.screen, chatId: s.chatId }, screen: 'home', railOpen: false, draft: '' }); },
+      // Возврат из ИИ-Ассистента туда, откуда клиент ушёл: в ту же беседу или на главную со списком
+      backFromAi: () => { const f = s.aiFrom; this.setState({ tab: 'chats', railOpen: false }); if (f && f.screen === 'chat') this.openChat(f.chatId); else this.setState({ screen: 'home' }); },
+      toChats: () => this.setState({ tab: 'chats' }),
+      openWidget: () => this.setState({ open: true }),
+      // Крестик закрывает чат: при следующем открытии — главная со списком бесед
+      closeWidget: () => { this.stopTyping(); this.setState({ open: false, orgOpen: false, railOpen: false, offer: false, promoAsk: false, promoSnoozed: false, screen: topics ? 'home' : 'chat', chatId: topics ? s.chatId : 'sup', tab: 'chats', draft: '' }); },
+      // Кнопка «свернуть» лишь прячет чат: при открытии клиент вернётся туда же
+      minimizeWidget: () => { this.stopTyping(); this.setState({ open: false, orgOpen: false, railOpen: false, offer: false, promoAsk: false }); },
+      fillScript: () => this.fillScript(),
+      onDraft: (e) => { if (!s.typing) this.setState({ draft: e.target.value }); },
+      onKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.send(); } },
+      send: () => this.send()
+    };
+  }
+}
+</script>
+</body>
+</html>
